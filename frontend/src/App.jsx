@@ -4,6 +4,8 @@ import ItemBoard from './components/ItemBoard'
 import { tamData } from './data/tam'
 import { shopifyData } from './data/shopify'
 
+export const BASE_URL = import.meta.env.VITE_BASE_URL
+
 function App() {
 
   return (
