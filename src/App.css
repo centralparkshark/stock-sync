@@ -47,7 +47,10 @@ h2 {
   }
 }
 
-
+.popUp {
+  padding: .5rem;
+  margin-bottom: 1rem;
+}
 
 table {
   width: 100%;
