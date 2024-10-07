@@ -1,6 +1,8 @@
 import './App.css'
 import SyncedOverview from './components/SyncedOverview'
 import ItemBoard from './components/ItemBoard'
+import { tamData } from './data/tam'
+import { shopifyData } from './data/shopify'
 
 function App() {
 
@@ -11,7 +13,8 @@ function App() {
         <div className='card'><h2 className='titleBar'>Cycle Counting:</h2>Coming Soon</div>
       </div>
       <div className="right">
-        <ItemBoard />
+        <ItemBoard title={"TAM"} inventory={tamData}/>
+        <ItemBoard title={"Shopify"} inventory={shopifyData}/>
       </div>
       
       

@@ -4,10 +4,10 @@ import { tamData } from '../data/tam'
 
 import { useState } from 'react'
 
-export default function ItemBoard() {
+export default function ItemBoard({title, inventory}) {
 
     const [search, setSearch] = useState("")
-    const [data, setData] = useState(tamData)
+    const [data, setData] = useState(inventory)
     const [openFilters, setOpenFilters] = useState(false)
     const [filter, setFilter] = useState("")
 
@@ -27,7 +27,7 @@ export default function ItemBoard() {
     return (
         <div className='items card'>
             <div className='titleBar'>
-                <h2>Inventory:</h2>
+                <h2>{title} Inventory:</h2>
                 <div>
                     <input type='text' placeholder='Search' onChange={(e) => searchData(e)} value={search}/>
                     <button className=" fa fa-filter" onClick={() => setOpenFilters(!openFilters)}></button>

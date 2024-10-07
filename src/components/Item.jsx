@@ -9,8 +9,12 @@ export default function Item(props) {
 
     let sku = props.sku.replace(/^0+/, '') // replace leading zeros to match skus
     
-    // need to check if shopify data already has sku
-    if (shopifyData.some(item => item.sku === sku)) {
+    // check if shopify data already has sku
+    let match = shopifyData.find(item => item.sku === sku)
+    if (match) {
+        // handling of some kind to make sure it actually matches
+        // ideally check price and quantity
+        // console.log(match)
         isSynced = true;
     } 
 
@@ -19,11 +23,11 @@ export default function Item(props) {
     return (
         <tr className="item">
             <td>{props.title}</td>
-            <td>{props.tamStock}</td>
+            <td>{props.stock}</td>
             <td>
                 {!synced && <div className="status shopify">Not Synced</div>}
                 {/* {<div className="status cycle">Uncounted</div>} */}
-                {props.tamStock < 5 && <div className="status lowStock">Low Stock</div>}
+                {props.stock < 5 && <div className="status lowStock">Low Stock</div>}
             </td>
         </tr>
     )
