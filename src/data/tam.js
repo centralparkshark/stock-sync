@@ -5,7 +5,8 @@ export const tamData = [
         tamStock: 30,
         floorStock: 2,
         backStock: null,
-        lastCounted: "2023-01-13"
+        lastCounted: "2023-01-13",
+        shopifyStatus: false,
     },
     {
         sku: "001062",
@@ -13,7 +14,8 @@ export const tamData = [
         tamStock: -1,
         floorStock: 5,
         backStock: null,
-        lastCounted: "2023-01-13"
+        lastCounted: "2023-01-13",
+        shopifyStatus: true,
     },
     {
         sku: "003202",
@@ -21,6 +23,7 @@ export const tamData = [
         tamStock: 7,
         floorStock: 2,
         backStock: 5,
-        lastCounted: "2023-01-13"
+        lastCounted: "2023-01-13",
+        shopifyStatus: false,
     }
 ]

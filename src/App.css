@@ -12,7 +12,7 @@ body {
 #root {
   padding: 0;
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 2fr 3fr;
   width: 100%;
 }
 
@@ -26,14 +26,46 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
-.item {
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.281);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  text-align: left;
+  background-color: #092d7b;
+}
+
+th, td {
+  padding: 4px 8px;
+}
+
+td:nth-child(3) {
   display: flex;
-  gap: 10px;
-  justify-content: space-between;
-  border: 1px solid white;
-  margin: 1rem 0;
-  padding: 4px;
-  border-radius: 6px;
+  justify-content: end;
+}
+
+tr:nth-child(even) {
+  background-color: #092d7b5b;
+}
+
+.status {
+  padding: 2px 6px;
+  margin: 2px;
+  border-radius: 1rem;
+  text-align: center;
+  font-size: .8rem;
+}
+
+.status.cycle {
+  background-color: rgb(95, 10, 134);
+}
+
+.status.shopify {
+  background-color: rgb(155, 25, 8);
 }
 
 @media (max-width: 800px) {
@@ -42,3 +74,4 @@ body {
     flex-direction: column;
   }
 }
+

@@ -1,9 +1,13 @@
-export default function Item({title, tamStock}) {
+export default function Item({title, tamStock, shopifyStatus, lastCounted}) {
     return (
-        <div className="item">
-            <div>{title}</div>
-            <div>{tamStock}</div>
-        </div>
+        <tr className="item">
+            <td>{title}</td>
+            <td>{tamStock}</td>
+            <td>
+                {!shopifyStatus && <div className="status shopify">Not Synced</div>}
+                {<div className="status cycle">Uncounted</div>}
+            </td>
+        </tr>
     )
 }
 
@@ -41,3 +45,4 @@ export default function Item({title, tamStock}) {
 
 // Notes
 // What to do about multiple store locations (FP, HHC, MC, Online)
+

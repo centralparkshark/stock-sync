@@ -1,8 +1,6 @@
 import './App.css'
 import SyncedOverview from './components/SyncedOverview'
-import Item from './components/Item'
-import { tamData } from './data/tam'
-
+import ItemBoard from './components/ItemBoard'
 
 function App() {
 
@@ -12,9 +10,7 @@ function App() {
         <SyncedOverview />
       </div>
       <div className="right">
-        <div className='items card'>
-          {tamData.map(item => (<Item key={item.sku} {...item}></Item>))}
-        </div>
+        <ItemBoard />
       </div>
       
       
