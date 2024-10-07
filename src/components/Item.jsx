@@ -6,6 +6,7 @@ export default function Item({title, tamStock, shopifyStatus, lastCounted}) {
             <td>
                 {!shopifyStatus && <div className="status shopify">Not Synced</div>}
                 {<div className="status cycle">Uncounted</div>}
+                {tamStock < 5 && <div className="status lowStock">Low Stock</div>}
             </td>
         </tr>
     )

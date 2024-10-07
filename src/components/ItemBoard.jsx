@@ -9,10 +9,16 @@ export default function ItemBoard() {
                 <input type='text' placeholder='Search'/>
             </div>
           <table>
-            <th>Title</th>
-            <th>Quantity</th>
-            <th>Status</th>
-            {tamData.map(item => (<Item key={item.sku} {...item}></Item>))}
+            <thead>
+                <tr>
+                    <td>Item</td>
+                    <td>Quantity</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+            <tbody>
+                {tamData.map(item => (<Item key={item.sku} {...item}></Item>))}
+            </tbody>
         </table>
         </div>
     )

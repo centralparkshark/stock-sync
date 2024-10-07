@@ -8,6 +8,7 @@ function App() {
     <>
       <div className='left'>
         <SyncedOverview />
+        <div className='card'>Cycle Counting</div>
       </div>
       <div className="right">
         <ItemBoard />
