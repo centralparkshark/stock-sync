@@ -1,7 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #092e7b;
+  background-image: 
+      radial-gradient(at 47% 33%, hsl(252.54, 82%, 16%) 0, transparent 59%), 
+      radial-gradient(at 82% 65%, hsl(198.86, 72%, 9%) 0, transparent 55%);
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  width: 100%;
+}
+
+.card {
+  margin: 2rem;
+  padding: 1rem;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
 .item {
@@ -9,7 +31,14 @@
   gap: 10px;
   justify-content: space-between;
   border: 1px solid white;
-  margin: 1rem;
+  margin: 1rem 0;
   padding: 4px;
   border-radius: 6px;
+}
+
+@media (max-width: 800px) {
+  #root{
+    display: flex;
+    flex-direction: column;
+  }
 }
