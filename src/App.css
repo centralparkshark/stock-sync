@@ -32,9 +32,6 @@ body {
   margin-bottom: 1rem;
 }
 
-.syncedOverview {
-}
-
 h2 {
   margin: 0;
 }
@@ -63,6 +60,11 @@ table {
 thead {
   background-color: #092d7b;
   font-weight: bold;
+}
+
+tr:has(td):hover {
+  cursor:pointer;
+  background-color: #0b3fb15b;;
 }
 
 td {

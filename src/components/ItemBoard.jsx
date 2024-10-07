@@ -46,9 +46,9 @@ export default function ItemBoard({title, inventory}) {
           <table>
             <thead>
                 <tr>
-                    <td>Item</td>
-                    <td>Quantity</td>
-                    <td>Status</td>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
