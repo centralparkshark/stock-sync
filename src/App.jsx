@@ -8,7 +8,7 @@ function App() {
     <>
       <div className='left'>
         <SyncedOverview />
-        <div className='card'>Cycle Counting</div>
+        <div className='card'><h2 className='titleBar'>Cycle Counting:</h2>Coming Soon</div>
       </div>
       <div className="right">
         <ItemBoard />

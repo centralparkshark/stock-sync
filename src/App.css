@@ -26,6 +26,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
+.titleBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
 .syncedOverview {
 }
 
@@ -37,7 +43,7 @@ h2 {
   display: flex;
   .card {
     width: 100%;
-    margin: 1rem;
+    margin: 0 .5rem;
   }
 }
 
