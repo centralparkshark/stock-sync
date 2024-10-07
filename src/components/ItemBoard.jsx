@@ -21,7 +21,7 @@ export default function ItemBoard({title, inventory}) {
     // BUT IT WORKS
     function searchData(e) {
         setSearch(e.target.value);
-        setData(data.filter(item => item.title.toLowerCase().includes(e.target.value.toLowerCase())))
+        setData(inventory.filter(item => item.title.toLowerCase().includes(e.target.value.toLowerCase())))
     }
 
     return (

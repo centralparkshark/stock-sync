@@ -9,3 +9,4 @@
 - [ ] Way to check if prices are updated
 - [ ] Better match handling (right now only checks if sku exists) [in item.jsx]
 - [ ] Out of Stock Status Button
+- [ ] Way to Search both boards at once? and check if their data lines up
