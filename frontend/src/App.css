@@ -67,6 +67,7 @@ tr:has(td):hover {
   background-color: #0b3fb15b;;
 }
 
+
 td {
   padding: 4px 8px;
 }
@@ -82,6 +83,18 @@ td:nth-child(3) {
 
 tr:nth-child(even) {
   background-color: #092d7b5b;
+}
+
+th {
+  padding: .5rem;
+}
+
+th:nth-child(1) {
+  text-align: left;
+}
+
+th:nth-child(3) {
+  text-align: right;
 }
 
 .status {

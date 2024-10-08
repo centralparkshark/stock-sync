@@ -1,6 +1,5 @@
 import Item from './Item'
-import { tamData } from '../data/tam'
-// import { shopifyData } from '../data/shopify'
+import { useEffect } from 'react'
 
 import { useState } from 'react'
 
@@ -11,6 +10,9 @@ export default function ItemBoard({title, inventory}) {
     const [openFilters, setOpenFilters] = useState(false)
     const [filter, setFilter] = useState("")
 
+    useEffect(() => {
+        setData(inventory); 
+      }, [inventory]);
 
     function filterData(e) {
         console.log(e.target.value)

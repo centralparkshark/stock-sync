@@ -6,11 +6,14 @@ const router = Router();
 // /shopify
 router.get('/', async (req, res) => {
     try {
-        res.status(200).json('GET /shopify')
+        const results = await ShopifyItems.find({}).limit(20)
+        res.status(200).json(results)
     } catch(e) {
         res.status(400).json(e)
     }
 })
+
+// create pagination
 
 // /shopify:sku
 router.get('/:sku', async (req, res) => {

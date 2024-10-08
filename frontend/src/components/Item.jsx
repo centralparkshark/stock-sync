@@ -3,7 +3,7 @@ import { shopifyData } from "../data/shopify"
 import { useState } from "react"
 
 export default function Item(props) {
-    //console.log(props)
+    console.log(props)
     
     let isSynced = false;
 

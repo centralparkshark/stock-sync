@@ -6,11 +6,14 @@ const router = Router();
 // /tam
 router.get('/', async (req, res) => {
     try {
-        res.status(200).json('GET /tam')
+        const results = await TamItems.find({}).limit(20)
+        res.status(200).json(results)
     } catch(e) {
         res.status(400).json(e)
     }
 })
+
+// create pagination
 
 // /tam:sku
 router.get('/:sku', async (req, res) => {

@@ -48,6 +48,8 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
+- [ ] remove leading zeros
+- [ ] create pagination
 - [ ] if synced, inventory values need to match (gotta think on this more)
 - [ ] Add logic handling for cycle counts to Item.jsx statuses
 - [ ] Figure out item variations (colors, sizes)
@@ -60,3 +62,6 @@ will probably need to find a way so that testers don't mess with my data lol
 - demonstration of the application
 - overview of the challenges endured and how I handled them
 - short q/a
+
+### Lessons Learned
+- MongoDB automatically pluralizes collections.

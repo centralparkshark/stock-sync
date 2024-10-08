@@ -2,15 +2,19 @@ import express from 'express'
 import shopifyRoutes from './routes/shopify.js'
 import tamRoutes from './routes/tam.js'
 import connectToDb from './db.js';
+import cors from 'cors'
+
 
 const app = express();
-app.use(express.json())
 const PORT = 8080;
 
 connectToDb();
 
+app.use(cors())
+app.use(express.json())
 app.use("/shopify", shopifyRoutes)
 app.use("/tam", tamRoutes)
+
 
 // test route
 app.get('/test', (req, res) => {
