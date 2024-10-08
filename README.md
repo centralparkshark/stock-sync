@@ -48,6 +48,7 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
+- [ ] if synced, inventory values need to match (gotta think on this more)
 - [ ] Add logic handling for cycle counts to Item.jsx statuses
 - [ ] Figure out item variations (colors, sizes)
 - [ ] Way to check if prices are updated

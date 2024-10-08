@@ -24,27 +24,9 @@ app.get('/inventory', async (req, res) => {
     }
 })
 
-app.get('/tam', async (req, res) => {
-    try {
-        res.status(200).json('GET /tam')
-    } catch(e) {
-        res.status(400).json(e)
-    }
-})
-
-
-
-app.get('/tam/:id', async (req, res) => {
-    try {
-        res.status(200).json('GET /tam:id')
-    } catch(e) {
-        res.status(400).json(e)
-    }
-})
-
 app.get('/', (req, res) => {
     try {
-        res.status(200).json('GET /inventory')
+        res.status(200).json('GET /')
     } catch(e) {
         res.status(400).json(e)
     }
