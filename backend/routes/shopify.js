@@ -1,5 +1,5 @@
 import { Router } from "express";
-// import model here
+import ShopifyItems from "../models/Shopify.js";
 
 const router = Router();
 
@@ -12,12 +12,15 @@ router.get('/', async (req, res) => {
     }
 })
 
-// /shopify:id
-router.get('/:id', async (req, res) => {
+// /shopify:sku
+router.get('/:sku', async (req, res) => {
     try {
-        const {id} = req.params;
-        // const results = await
-        res.status(200).json({'GET /shopify:id,': id})
+        const {sku} = req.params;
+        const results = await ShopifyItems.find({sku: sku})
+        if (!results.length) {
+            return res.status(404).json({message: 'SKU not found.'})
+        }
+        res.status(200).json(results)
     } catch(e) {
         res.status(400).json(e)
     }

@@ -1,12 +1,13 @@
 import express from 'express'
 import shopifyRoutes from './routes/shopify.js'
 import tamRoutes from './routes/tam.js'
-
-
+import connectToDb from './db.js';
 
 const app = express();
 app.use(express.json())
 const PORT = 8080;
+
+connectToDb();
 
 app.use("/shopify", shopifyRoutes)
 app.use("/tam", tamRoutes)

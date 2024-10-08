@@ -13,7 +13,7 @@ const shopifySchema = new mongoose.Schema({
     productType: { type: String},
     vendor: {type: String, default: "Heinz History Center"}, 
     collections: {type: [String]},
-    status: {enum: ["draft", "active", "archived"], default: "draft", required: true},
+    status: {type: String, enum: ["draft", "active", "archived"], default: "draft", required: true},
     lastUpdated: {type: String, required: true}, // date
     variants: [
         {
@@ -36,3 +36,10 @@ const shopifySchema = new mongoose.Schema({
 
 // required is sku, title, status, and last updated
 // stock, vendor, status have default values
+
+const ShopifyItems = mongoose.model("ShopifyItems", shopifySchema)
+
+shopifySchema.index({sku: 1}, {title: 1})
+mongoose.set('autoIndex', false)
+
+export default ShopifyItems;
