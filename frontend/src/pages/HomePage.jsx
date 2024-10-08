@@ -1,5 +1,5 @@
-import SyncedOverview from './SyncedOverview'
-import ItemBoard from './ItemBoard'
+import SyncedOverview from '../components/SyncedOverview'
+import ItemBoard from '../components/ItemBoard'
 import { useEffect, useState } from 'react'
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL
