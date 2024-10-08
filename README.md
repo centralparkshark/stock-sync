@@ -48,6 +48,7 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
+- [ ] fix css for upload page
 - [ ] add way to upload tam and shopify data
 - [ ] remove leading zeros
 - [ ] create pagination
