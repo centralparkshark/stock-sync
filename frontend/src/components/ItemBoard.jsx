@@ -14,17 +14,17 @@ export default function ItemBoard({title, inventory}) {
         setData(inventory); 
       }, [inventory]);
 
-    function filterData(e) {
-        console.log(e.target.value)
-        setFilter(e.target.value)
-        // need to create a way to filter data (probably easier in MongoDB)
-    }
-    // currently only works for the title
-    // BUT IT WORKS
-    function searchData(e) {
-        setSearch(e.target.value);
-        setData(inventory.filter(item => item.title.toLowerCase().includes(e.target.value.toLowerCase())))
-    }
+    // function filterData(e) {
+    //     console.log(e.target.value)
+    //     setFilter(e.target.value)
+    //     // need to create a way to filter data (probably easier in MongoDB)
+    // }
+    // // currently only works for the title
+    // // BUT IT WORKS
+    // function searchData(e) {
+    //     setSearch(e.target.value);
+    //     setData(inventory.filter(item => item.title.toLowerCase().includes(e.target.value.toLowerCase())))
+    // }
 
     return (
         <div className='items card'>

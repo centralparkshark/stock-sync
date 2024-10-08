@@ -17,6 +17,7 @@ export default function SyncedOverview() {
     return (
         <div className="syncedOverview card">
             <h2 className="titleBar">Overview:</h2>
+            <button>Upload New Data</button>
             <div>
                 <div className="card">Out Of Stock: {outOfStock}</div>
                 <div className="card">Low Stock: {lowStock}</div>

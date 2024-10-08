@@ -48,6 +48,7 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
+- [ ] add way to upload tam and shopify data
 - [ ] remove leading zeros
 - [ ] create pagination
 - [ ] if synced, inventory values need to match (gotta think on this more)
@@ -65,3 +66,7 @@ will probably need to find a way so that testers don't mess with my data lol
 
 ### Lessons Learned
 - MongoDB automatically pluralizes collections.
+- I should probably read more about CORS and what it means if it is gonna consistently be a problem.
+
+### Future Steps
+- Actually integrate with our Shopify account (didn't have explicit permission and need to use OAuth)

@@ -103,6 +103,7 @@ th:nth-child(3) {
   border-radius: 1rem;
   text-align: center;
   font-size: .8rem;
+  transform: translateX(4px);
 }
 
 .status.cycle {
