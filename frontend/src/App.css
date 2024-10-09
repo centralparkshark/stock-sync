@@ -11,7 +11,6 @@ body {
 
 #root {
   padding: 0;
-
   width: 100%;
 }
 
@@ -23,6 +22,14 @@ body {
   background-color: rgba(17, 25, 40, 0.75);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+#invCard {
+  display: flex;
+}
+
+#invCard>* {
+  width: 100%;
 }
 
 .titleBar {
@@ -142,4 +149,20 @@ th:nth-child(3) {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+input[type="text"] {
+  height: 2rem;
+  border-radius: 1rem;
+  padding: 10px;
+  margin: 0 10px;
+}
+
+button {
+  background-color: #092d7b;
+  border-radius: 20px;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

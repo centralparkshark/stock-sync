@@ -2,10 +2,10 @@ import Item from './Item'
 import { useEffect } from 'react'
 
 import { useState } from 'react'
+import SearchBar from './SearchBar'
 
 export default function ItemBoard({title, inventory}) {
 
-    const [search, setSearch] = useState("")
     const [data, setData] = useState(inventory)
     const [openFilters, setOpenFilters] = useState(false)
     const [filter, setFilter] = useState("")
@@ -30,10 +30,7 @@ export default function ItemBoard({title, inventory}) {
         <div className='items card'>
             <div className='titleBar'>
                 <h2>{title} Inventory:</h2>
-                <div>
-                    <input type='text' placeholder='Search' onChange={(e) => searchData(e)} value={search}/>
-                    <button className=" fa fa-filter" onClick={() => setOpenFilters(!openFilters)}></button>
-                </div>
+                <SearchBar />
             </div>
             {openFilters && <div className="popUp">
                 <label htmlFor="status">Status:</label>
