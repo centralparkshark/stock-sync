@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     try {
         let docs = req.body
         const results = await TamItems.insertMany(docs)
-        res.send(result).status(204)
+        res.send(results).status(204)
     } catch(e) {
         res.status(400).json(e)
     }

@@ -17,11 +17,11 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        // let docs = req.body
-        console.log(req.body)
-        //const results = await ShopifyItems.insertMany(docs, options)
-        //res.send(result).status(204)
+        let docs = req.body
+        const results = await ShopifyItems.insertMany(docs)
+        res.send(results).status(204)
     } catch(e) {
+        console.log(e)
         res.status(400).json(e)
     }
 })

@@ -33,8 +33,6 @@ export default function UploadPage() {
             },
             body: JSON.stringify(jsonData)
         }).then(res => res.json())
-        .then(data => console.log(
-        "Data", data))
     }
 
     return (

@@ -51,11 +51,14 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] search bar testing
 - [ ] main search bar has to search both!
 - [ ] add filter button back
-- [ ] nav bar
+- [x] nav bar
+- [ ] nav bar css 
 - [ ] error message for upload
+- [ ] success message for upload (maybe even list of items added)
 - [ ] fix css for upload page
 - [X] add way to upload tam 
-- [ ] and shopify data
+- [X] and shopify data
+- [ ] prevent duplicates by sku 
 - [ ] remove leading zeros
 - [ ] create pagination
 - [ ] if synced, inventory values need to match (gotta think on this more)
@@ -65,6 +68,7 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] Better match handling (right now only checks if sku exists) [in item.jsx]
 - [ ] Out of Stock Status Button
 - [ ] Way to Search both boards at once? and check if their data lines up
+- [ ] combine tam and shopify routes?
 
 ### Presentation
 - demonstration of the application
