@@ -8,7 +8,8 @@ const tamSchema = new mongoose.Schema({
     backStock: { type: Number, default: 0},
     price:{ type: Number },
     vendor: {type: String }, 
-    lastCounted: {type: String, required: true}, // date
+    lastCounted: {type: String }, // when cycled
+    lastUpdated: {type: String, required: true}, // date
     shopifyStatus: {type: Boolean, default: false}
 })
 

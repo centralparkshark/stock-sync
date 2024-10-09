@@ -15,6 +15,17 @@ router.get('/', async (req, res) => {
 
 // create pagination
 
+
+router.post('/', async (req, res) => {
+    try {
+        let docs = req.body
+        const results = await TamItems.insertMany(docs)
+        res.send(result).status(204)
+    } catch(e) {
+        res.status(400).json(e)
+    }
+})
+
 // /tam:sku
 router.get('/:sku', async (req, res) => {
     try {

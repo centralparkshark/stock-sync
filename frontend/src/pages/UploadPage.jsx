@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Papa from 'papaparse'
-import NavBar from "../components/NavBar";
+import { BASE_URL } from "./InventoryPage";
 
 export default function UploadPage() {
 
@@ -10,19 +10,31 @@ export default function UploadPage() {
 
     function sendFormData(e) {
         e.preventDefault()
+        const date = new Date()
         if (file) {
-            console.log("here1")
             Papa.parse(file, {
                 complete: function (results) {
+                    results.data.map(item => (item.lastUpdated = date))
                     setJsonData(results.data)
-                    console.log(results.data)
                 },
                 header: true,
                 skipEmptyLines: true
             })
         }
         // send data to correct system (need to create create routes)
+        sendToDB()
+    }
 
+    async function sendToDB() {
+        await fetch(`${BASE_URL}/${system}`,{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        }).then(res => res.json())
+        .then(data => console.log(
+        "Data", data))
     }
 
     return (

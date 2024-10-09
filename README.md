@@ -48,10 +48,14 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
+- [ ] search bar testing
+- [ ] main search bar has to search both!
+- [ ] add filter button back
 - [ ] nav bar
 - [ ] error message for upload
 - [ ] fix css for upload page
-- [ ] add way to upload tam and shopify data
+- [X] add way to upload tam 
+- [ ] and shopify data
 - [ ] remove leading zeros
 - [ ] create pagination
 - [ ] if synced, inventory values need to match (gotta think on this more)

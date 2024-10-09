@@ -15,6 +15,19 @@ router.get('/', async (req, res) => {
 
 // create pagination
 
+router.post('/', async (req, res) => {
+    try {
+        // let docs = req.body
+        console.log(req.body)
+        //const results = await ShopifyItems.insertMany(docs, options)
+        //res.send(result).status(204)
+    } catch(e) {
+        res.status(400).json(e)
+    }
+})
+
+
+
 // /shopify:sku
 router.get('/:sku', async (req, res) => {
     try {
