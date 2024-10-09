@@ -9,21 +9,21 @@ export default function HomePage() {
     const [tamData, setTamData] = useState([])
     const [shopifyData, setShopifyData] = useState([])
   
-    useEffect(() => {
-      async function initialFetch() {
-        const tamResponse = await fetch(`${BASE_URL}/tam`)
-        const tamData = await tamResponse.json()
-        console.log(tamData)
-        setTamData(tamData)
+    // useEffect(() => {
+    //   async function initialFetch() {
+    //     const tamResponse = await fetch(`${BASE_URL}/tam`)
+    //     const tamData = await tamResponse.json()
+    //     console.log(tamData)
+    //     setTamData(tamData)
   
-        const shopifyResponse = await fetch(`${BASE_URL}/shopify`)
-        console.log(shopifyResponse)
-        const shopifyData = await shopifyResponse.json()
-        console.log(shopifyData)
-        setShopifyData(shopifyData)
-      }
-      initialFetch()
-    }, [])
+    //     const shopifyResponse = await fetch(`${BASE_URL}/shopify`)
+    //     console.log(shopifyResponse)
+    //     const shopifyData = await shopifyResponse.json()
+    //     console.log(shopifyData)
+    //     setShopifyData(shopifyData)
+    //   }
+    //   initialFetch()
+    // }, [])
 
   
     return (
@@ -32,7 +32,7 @@ export default function HomePage() {
             <SyncedOverview />
             <div className='card'><h2 className='titleBar'>Cycle Counting:</h2>Coming Soon</div>
         </div>
-        <div className="right">
+        <div className="right card">
             <ItemBoard title={"TAM"} inventory={tamData}/>
             <ItemBoard title={"Shopify"} inventory={shopifyData}/>
         </div>
