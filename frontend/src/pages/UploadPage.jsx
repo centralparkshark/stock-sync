@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Papa from 'papaparse'
+import NavBar from "../components/NavBar";
 
 export default function UploadPage() {
 
@@ -25,19 +26,22 @@ export default function UploadPage() {
     }
 
     return (
+        <>
+        
         <div className="center">
-        <div className="card">
-           <form action="">
-                <div onChange={(e) => setSystem(e.target.value)}>
-                    <label htmlFor="tam">TAM</label>
-                    <input type="radio" name="system" id="tam" value="tam" required />
-                    <label htmlFor="shopify">Shopify</label>
-                    <input type="radio" name="system" id="shopify" value="shopify" required />
-                </div>
-                <input type="file" name="csv" id="" accept="text/csv" onChange={(e) => setFile(e.target.files[0])} required/>
-                <button onClick={(e) => sendFormData(e)}>Upload</button>
-           </form>
+            <div className="card">
+            <form action="">
+                    <div onChange={(e) => setSystem(e.target.value)}>
+                        <label htmlFor="tam">TAM</label>
+                        <input type="radio" name="system" id="tam" value="tam" required />
+                        <label htmlFor="shopify">Shopify</label>
+                        <input type="radio" name="system" id="shopify" value="shopify" required />
+                    </div>
+                    <input type="file" name="csv" id="" accept="text/csv" onChange={(e) => setFile(e.target.files[0])} required/>
+                    <button onClick={(e) => sendFormData(e)}>Upload</button>
+            </form>
+            </div>
         </div>
-        </div>
+        </>
     )
 }

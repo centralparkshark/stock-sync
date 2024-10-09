@@ -1,6 +1,7 @@
 import SyncedOverview from '../components/SyncedOverview'
 import ItemBoard from '../components/ItemBoard'
 import { useEffect, useState } from 'react'
+import NavBar from '../components/NavBar'
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL
 

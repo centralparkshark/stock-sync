@@ -11,13 +11,20 @@ import HomePage from './pages/HomePage.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "/upload",
-    element: <UploadPage />
-  },
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: "/upload",
+        element: <UploadPage />
+      },
+    ]
+  }
 ])
 
 createRoot(document.getElementById('root')).render(

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { tamData } from "../data/tam"
 
 // these needs redone if im gonna have buth shopify and tam
@@ -17,7 +18,7 @@ export default function SyncedOverview() {
     return (
         <div className="syncedOverview card">
             <h2 className="titleBar">Overview:</h2>
-            <button>Upload New Data</button>
+            <Link to="upload"><button>Upload New Data</button></Link>
             <div>
                 <div className="card">Out Of Stock: {outOfStock}</div>
                 <div className="card">Low Stock: {lowStock}</div>
