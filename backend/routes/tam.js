@@ -40,4 +40,18 @@ router.get('/:sku', async (req, res) => {
     }
 })
 
+router.patch('/:sku', async (req, res) => {
+    try {
+        const {sku} = req.params;
+        console.log(req.body)
+        const updatedItem = await TamItems.findOneAndUpdate(
+            { sku: sku }, 
+            { returnNewDocument: true }
+        )
+        res.send(updatedItem).status(200)
+    } catch(e) {
+        res.status(400).json(e)
+    }
+})
+
 export default router;

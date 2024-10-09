@@ -3,6 +3,7 @@ import ShopifyItems from "../models/ShopifyItems.js";
 
 const router = Router();
 
+// r
 // /shopify
 router.get('/', async (req, res) => {
     try {
@@ -15,6 +16,8 @@ router.get('/', async (req, res) => {
 
 // create pagination
 
+// c
+// /shopify
 router.post('/', async (req, res) => {
     try {
         let docs = req.body
@@ -26,8 +29,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-
-
+// r
 // /shopify:sku
 router.get('/:sku', async (req, res) => {
     try {
@@ -41,5 +43,22 @@ router.get('/:sku', async (req, res) => {
         res.status(400).json(e)
     }
 })
+
+
+// d (gotta think about this as well)
+// /shopify:sku
+router.delete('/:sku', async (req, res) => {
+    try {
+        // let update = req.body
+        // const results = await ShopifyItems.findOneAndDelete(docs)
+        // res.send(results).status(204)
+    } catch(e) {
+        console.log(e)
+        res.status(400).json(e)
+    }
+})
+
+// shopifiy doesn't need an update route since it will all come from shopify's data
+// basically udpate on their website
 
 export default router;

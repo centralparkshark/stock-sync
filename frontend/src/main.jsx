@@ -8,6 +8,7 @@ import ErrorPage from './pages/ErrorPage.jsx'
 import UploadPage from './pages/UploadPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import InventoryPage from './pages/InventoryPage.jsx'
+import ItemPage from './pages/ItemPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/upload",
         element: <UploadPage />
+      },
+      {
+        path: "/inventory/:id",
+        element: <ItemPage />
       },
       {
         path: "/inventory",

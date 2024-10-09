@@ -69,6 +69,7 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] Out of Stock Status Button
 - [ ] Way to Search both boards at once? and check if their data lines up
 - [ ] combine tam and shopify routes?
+- [ ] multi-update
 
 ### Presentation
 - demonstration of the application
