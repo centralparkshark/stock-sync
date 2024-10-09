@@ -1,5 +1,5 @@
 import { shopifyData } from "../data/shopify"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 
 export default function Item(props) {
@@ -18,20 +18,26 @@ export default function Item(props) {
         isSynced = true;
     } 
 
+    const navigate = useNavigate();
+    function handleRowClick(sku) {
+        console.log(sku)
+        navigate(`/inventory/${sku}`)
+
+    }
+
     const [synced, setSynced] = useState(isSynced)
 
+
     return (
-        <Link className="link" to={`/inventory/${sku}`}>
-            <tr className="item">
-                <td>{props.title}</td>
-                <td>{props.stock}</td>
-                <td>
-                    {!synced && <div className="status shopify">Not Synced</div>}
-                    {/* {<div className="status cycle">Uncounted</div>} */}
-                    {props.stock < 5 && <div className="status lowStock">Low Stock</div>}
-                </td>
-            </tr>
-        </Link>
+        <tr className="item" onClick={() => handleRowClick(sku)}>
+            <td>{props.title}</td>
+            <td>{props.stock}</td>
+            <td>
+                {!synced && <div className="status shopify">Not Synced</div>}
+                {/* {<div className="status cycle">Uncounted</div>} */}
+                {props.stock < 5 && <div className="status lowStock">Low Stock</div>}
+            </td>
+        </tr>
     )
 }
 
