@@ -48,7 +48,7 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
-- [ ] search bar testing
+- [x] search bar testing
 - [ ] main search bar has to search both!
 - [ ] add filter button back
 - [x] nav bar
@@ -71,7 +71,9 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] combine tam and shopify routes?
 - [ ] multi-update
 - [ ] convert prices to dollar format
-
+- [ ] if shopify item is changed, it goes on export list
+- [ ] create export page
+ 
 ### Presentation
 - demonstration of the application
 - overview of the challenges endured and how I handled them
