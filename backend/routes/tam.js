@@ -43,9 +43,10 @@ router.get('/:sku', async (req, res) => {
 router.patch('/:sku', async (req, res) => {
     try {
         const {sku} = req.params;
-        console.log(req.body)
+        const updatedFields = req.body
         const updatedItem = await TamItems.findOneAndUpdate(
             { sku: sku }, 
+            updatedFields,
             { returnNewDocument: true }
         )
         res.send(updatedItem).status(200)

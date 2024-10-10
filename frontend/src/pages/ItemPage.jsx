@@ -39,7 +39,7 @@ function NotFound() {
 }
 
 function SimpleDisplay({name, ...system}) {
-    function saveEdits(name) {
+    async function saveEdits(name) {
         console.log(name)
         setEditing(!editing)
 
@@ -51,6 +51,25 @@ function SimpleDisplay({name, ...system}) {
         }))
 
         // need to send a post to db
+        const payload = {
+            stock: Number(input.stock),
+            price: Number(input.price),
+        }
+
+        try {
+            console.log(payload)
+            const response = await fetch(`${BASE_URL}/${name}/${data.sku}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+        } catch (e) {
+            console.error(e)
+        }
+
+
     }
 
     function handleChange(e) {
