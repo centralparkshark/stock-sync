@@ -18,7 +18,6 @@ export default function Item(props) {
 
     const navigate = useNavigate();
     function handleRowClick(sku) {
-        console.log(sku)
         navigate(`/inventory/${sku}`)
 
     }

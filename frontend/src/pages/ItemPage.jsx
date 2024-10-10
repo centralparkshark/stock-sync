@@ -41,46 +41,63 @@ function NotFound() {
 function SimpleDisplay({name, ...system}) {
     function saveEdits(name) {
         console.log(name)
-        console.log(editing)
         setEditing(!editing)
+
+        // i think last updated should only change if stock is changed
+        setData(prevData => ({
+            ...prevData,
+            stock: Number(input.stock),
+            price: Number(input.price),
+        }))
+
+        // need to send a post to db
+    }
+
+    function handleChange(e) {
+        const {name, value} = e.target;
+        setInput(prev => ({
+            ...prev,
+            [name]: value
+        }))
     }
     
     const [editing, setEditing] = useState(false)
     const [data, setData] = useState(system)
+    const [input, setInput] = useState(system)
 
     return (
         <div className="card">
             <div className="editButton">
-                {!editing ? <div className=" fa fa-edit fa-2x" onClick={setEditing(!editing)}></div> : <button onClick={() => saveEdits(name)}>Save Changes</button>}
+                {!editing ? <div className=" fa fa-edit fa-2x" onClick={() => setEditing(!editing)}></div> : <button onClick={() => saveEdits(name)}>Save Changes</button>}
             </div>
-            <h2>{system.title}</h2>
-            <img src={system.media} alt={system.title} />
-            <p>SKU: {system.sku}</p>
+            <h2>{data.title}</h2>
+            <img src={data.media} alt={data.title} />
+            <p>SKU: {data.sku}</p>
             <table>
                 <tbody>
                     <tr>
                         <td>Stock:</td>
-                        <td>{editing ? <input/> : system.stock}</td>
+                        <td>{editing ? <input name="stock" type="number" onChange={handleChange} value={input.stock}/> : data.stock}</td>
                     </tr>
                     <tr>
                         <td>Price:</td>
-                        <td>{editing ? <input/> : system.price}</td>
+                        <td>{editing ? <input name="price" type="number" onChange={handleChange} value={input.price}/> : data.price}</td>
                     </tr>
-                    { system.compareAtPrice ? <tr>
+                    { data.compareAtPrice ? <tr>
                         <td>Compare At Price:</td>
-                        <td>${system.compareAtPrice}</td>
+                        <td>{editing ? <input/> : data.compareAtPrice}</td>
                     </tr> : ''}
                     <tr>
                         <td>Vendor:</td>
-                        <td>{system.vendor}</td>
+                        <td>{editing ? <input/> : data.vendor}</td>
                     </tr>
                     <tr>
                         <td>Last Updated:</td>
-                        <td>{system.lastUpdated}</td>
+                        <td>{data.lastUpdated}</td>
                     </tr>
                 </tbody>
             </table>
-            {name == "shopify" ? <ShopifyDetails {...system}/> : ''}
+            {name == "shopify" ? <ShopifyDetails {...data}/> : ''}
         </div>
 
         
