@@ -49,7 +49,9 @@ will probably need to find a way so that testers don't mess with my data lol
 
 ### To - Do:
 - [x] search bar testing
-- [ ] main search bar has to search both!
+- [x] main search bar has to search both!
+- [ ] have to click main search bar twice to make it work..?
+- [ ] individual search bars?
 - [ ] add filter button back
 - [x] nav bar
 - [x] nav bar css 
