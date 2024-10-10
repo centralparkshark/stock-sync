@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 })
 
 // r
-// /shopify:sku
+// /shopify/:sku
 router.get('/:sku', async (req, res) => {
     try {
         const {sku} = req.params;

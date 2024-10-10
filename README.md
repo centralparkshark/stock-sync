@@ -70,6 +70,7 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] Way to Search both boards at once? and check if their data lines up
 - [ ] combine tam and shopify routes?
 - [ ] multi-update
+- [ ] convert prices to dollar format
 
 ### Presentation
 - demonstration of the application

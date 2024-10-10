@@ -7,8 +7,8 @@ import App from './App.jsx'
 import ErrorPage from './pages/ErrorPage.jsx'
 import UploadPage from './pages/UploadPage.jsx'
 import HomePage from './pages/HomePage.jsx'
-import InventoryPage from './pages/InventoryPage.jsx'
-import ItemPage from './pages/ItemPage.jsx'
+import InventoryPage, { BASE_URL } from './pages/InventoryPage.jsx'
+import ItemPage, { itemLoader } from './pages/ItemPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -26,8 +26,11 @@ const router = createBrowserRouter([
         element: <UploadPage />
       },
       {
-        path: "/inventory/:id",
-        element: <ItemPage />
+        path: "/inventory/:sku",
+        element: <ItemPage />,
+        loader: ({params}) => {
+          return itemLoader(params)
+        },
       },
       {
         path: "/inventory",
