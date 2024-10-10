@@ -85,11 +85,11 @@ function SimpleDisplay({name, ...system}) {
                     </tr>
                     { data.compareAtPrice ? <tr>
                         <td>Compare At Price:</td>
-                        <td>{editing ? <input/> : data.compareAtPrice}</td>
+                        <td>{editing ? <input name="compareAtPrice" type="number" onChange={handleChange} value={input.compareAtPrice}/> : data.compareAtPrice}</td>
                     </tr> : ''}
                     <tr>
                         <td>Vendor:</td>
-                        <td>{editing ? <input/> : data.vendor}</td>
+                        <td>{editing ? <input name="vendor" type="text" onChange={handleChange} value={input.vendor}/> : data.vendor}</td>
                     </tr>
                     <tr>
                         <td>Last Updated:</td>
@@ -97,45 +97,48 @@ function SimpleDisplay({name, ...system}) {
                     </tr>
                 </tbody>
             </table>
-            {name == "shopify" ? <ShopifyDetails {...data}/> : ''}
+            {name == "shopify" ? 
+                <>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Weight:</td>
+                                <td>{editing ? 
+                                <>
+                                    <input name="weight" type="number" onChange={handleChange} value={input.weight}/>
+                                    <input name="weightType" type="text" onChange={handleChange} value={input.weightType}/>
+                                </>
+                                : <>{data.weight}{data.weightType}</>}</td>
+                            </tr>
+                            <tr>
+                                <td>Category:</td>
+                                <td>{data.category}</td>
+                            </tr>
+                            <tr>
+                                <td>Product Type:</td>
+                                <td>{data.productType}</td>
+                            </tr>
+                            <tr>
+                                <td>Collections:</td>
+                                <td>{data.collections}</td>
+                            </tr>
+                            <tr>
+                                <td>Status:</td>
+                                <td><div className="status">{data.status}</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button>Add Variants</button>
+                    {data.variants.length > 0 ? <div>variants go here</div> : ""}
+                </>
+            
+            : ''}
         </div>
 
         
     )
 }
 
-function ShopifyDetails(details) {
-    return (
-        <>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Weight:</td>
-                    <td>{details.weight}{details.weightType}</td>
-                </tr>
-                <tr>
-                    <td>Category:</td>
-                    <td>{details.category}</td>
-                </tr>
-                <tr>
-                    <td>Product Type:</td>
-                    <td>{details.productType}</td>
-                </tr>
-                <tr>
-                    <td>Collections:</td>
-                    <td>{details.collections}</td>
-                </tr>
-                <tr>
-                    <td>Status:</td>
-                    <td><div className="status">{details.status}</div></td>
-                </tr>
-            </tbody>
-        </table>
-        <button>Add Variants</button>
-        {details.variants.length > 0 ? <div>variants go here</div> : ""}
-        </>
-    )
-}
 
 // variants: [
 //     {
