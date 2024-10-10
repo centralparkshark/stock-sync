@@ -22,9 +22,14 @@ body {
   background-color: rgba(17, 25, 40, 0.75);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
+  position: relative;
 }
-.card.half {
+.half {
   width: 50%;
+}
+
+.half>h1 {
+  text-align: center;
 }
 
 .flex {
@@ -166,9 +171,10 @@ button {
   justify-content: center;
 }
 
-
-
-
+.editButton {
+  position: absolute;
+  right: 1rem;
+}
 
 
 @media (max-width: 1000px) {

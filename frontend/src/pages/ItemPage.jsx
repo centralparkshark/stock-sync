@@ -9,8 +9,16 @@ export default function ItemPage() {
 
     return (
         <div className="flex">
-            <Display {...tamData} />
-            <Display {...shopifyData} />    
+            <div className="half">
+                <h1>TAM</h1>
+                {tamData ? <SimpleDisplay {...tamData} /> : <NotFound />}            
+            </div>
+            <div className="half">
+                <h1>Shopify</h1>
+                {shopifyData ? <SimpleDisplay {...shopifyData} /> : <NotFound />}   
+            </div>
+            
+            
         <div>
                 {/* {itemData.category.map(tag => <div className="status">{tag}</div>)} */}
             </div>
@@ -19,25 +27,101 @@ export default function ItemPage() {
     )
 }
 
-function Display(system) {
+function NotFound() {
     return (
-        <div className="card half">
+        <>
+            <h2>No item found.</h2>
+            <button>Create item?</button>
+        </>
+    )
+}
+
+function SimpleDisplay(system) {
+    return (
+        <div className="card">
+            <div className="editButton fa fa-edit fa-2x"></div>
             <h2>{system.title}</h2>
             <img src={system.media} alt={system.title} />
+            <p>SKU: {system.sku}</p>
             <table>
-                <td>
-                    <p>{system.description}</p>
-                </td>
-                <td>
-                    <p>${system.price}</p> 
-                </td>
+                <tr>
+                    <td>Stock:</td>
+                    <td>{system.stock}</td>
+                </tr>
+                <tr>
+                    <td>Price:</td>
+                    <td>${system.price}</td>
+                </tr>
+                { system.compareAtPrice ? <tr>
+                    <td>Compare At Price:</td>
+                    <td>${system.compareAtPrice}</td>
+                </tr> : ''}
+                <tr>
+                    <td>Vendor:</td>
+                    <td>{system.vendor}</td>
+                </tr>
+                <tr>
+                    <td>Last Updated:</td>
+                    <td>{system.lastUpdated}</td>
+                </tr>
             </table>
+            {system.collections ? <ShopifyDetails {...system}/> : ''}
             
             
         </div>
         
     )
 }
+
+function ShopifyDetails(details) {
+    console.log(details)
+    return (
+        <>
+        <table>
+            <tr>
+                <td>Weight:</td>
+                <td>{details.weight}{details.weightType}</td>
+            </tr>
+            <tr>
+                <td>Category:</td>
+                <td>{details.category}</td>
+            </tr>
+            <tr>
+                <td>Product Type:</td>
+                <td>{details.productType}</td>
+            </tr>
+            <tr>
+                <td>Collections:</td>
+                <td>{details.collections}</td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td><div className="status">{details.status}</div></td>
+            </tr>
+        </table>
+        <button>Add Variants</button>
+        {details.variants.length > 0 ? <div>variants go here</div> : ""}
+        </>
+    )
+}
+
+// variants: [
+//     {
+//         sku: { type: String }, // variant sku
+//         stock: { type: Number, default: 0},
+//         price:{ type: Number },
+//         compareAtPrice: { type: Number },
+//         weight: { type: Number },
+//         weightType: { type: String },
+
+//         options: [
+//             {
+//                 name: { type: String }, // ex. size, color
+//                 value: { type: String }, //e ex. red, Large
+//             }
+//         ]
+//     }
+// ]
 
 // loader function
 export const itemLoader = async (params) => {
@@ -48,6 +132,8 @@ export const itemLoader = async (params) => {
     const shopify = await shopifyRes.json()
     return {tam, shopify}
 }
+
+
 
 
 // Needed Sections for Shopify
