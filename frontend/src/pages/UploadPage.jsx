@@ -21,7 +21,6 @@ export default function UploadPage() {
                 skipEmptyLines: true
             })
         }
-        // send data to correct system (need to create create routes)
         sendToDB()
     }
 

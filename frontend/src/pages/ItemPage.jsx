@@ -54,6 +54,9 @@ function SimpleDisplay({name, ...system}) {
         const payload = {
             stock: Number(input.stock),
             price: Number(input.price),
+            vendor: input.vendor,
+            weight: Number(input.weight),
+            weightType: input.weightType,
         }
 
         try {
