@@ -51,7 +51,7 @@ export default function ItemBoard({title, inventory}) {
                 </tr>
             </thead>
             <tbody>
-                {data.map(item => (<Item key={item.sku} {...item}></Item>))}
+                {data.map(item => (<Item key={item._id} {...item}></Item>))}
             </tbody>
         </table>
         </div>
