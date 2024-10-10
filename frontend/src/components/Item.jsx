@@ -2,9 +2,7 @@ import { shopifyData } from "../data/shopify"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 
-export default function Item(props) {
-    console.log(props)
-    
+export default function Item(props) {    
     let isSynced = false;
 
     let sku = props.sku.replace(/^0+/, '') // replace leading zeros to match skus

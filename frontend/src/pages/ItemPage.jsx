@@ -1,5 +1,7 @@
 import { useLoaderData } from "react-router-dom"
 import { BASE_URL } from "./InventoryPage"
+import { useState } from "react"
+
 
 export default function ItemPage() {
     const {tam, shopify } = useLoaderData()
@@ -11,11 +13,11 @@ export default function ItemPage() {
         <div className="flex">
             <div className="half">
                 <h1>TAM</h1>
-                {tamData ? <SimpleDisplay {...tamData} /> : <NotFound />}            
+                {tamData ? <SimpleDisplay {...tamData} name="tam"/> : <NotFound />}            
             </div>
             <div className="half">
                 <h1>Shopify</h1>
-                {shopifyData ? <SimpleDisplay {...shopifyData} /> : <NotFound />}   
+                {shopifyData ? <SimpleDisplay {...shopifyData} name="shopify"/> : <NotFound />}   
             </div>
             
             
@@ -36,68 +38,81 @@ function NotFound() {
     )
 }
 
-function SimpleDisplay(system) {
+function SimpleDisplay({name, ...system}) {
+    function saveEdits(name) {
+        console.log(name)
+        console.log(editing)
+        setEditing(!editing)
+    }
+    
+    const [editing, setEditing] = useState(false)
+    const [data, setData] = useState(system)
+
     return (
         <div className="card">
-            <div className="editButton fa fa-edit fa-2x"></div>
+            <div className="editButton">
+                {!editing ? <div className=" fa fa-edit fa-2x" onClick={setEditing(!editing)}></div> : <button onClick={() => saveEdits(name)}>Save Changes</button>}
+            </div>
             <h2>{system.title}</h2>
             <img src={system.media} alt={system.title} />
             <p>SKU: {system.sku}</p>
             <table>
-                <tr>
-                    <td>Stock:</td>
-                    <td>{system.stock}</td>
-                </tr>
-                <tr>
-                    <td>Price:</td>
-                    <td>${system.price}</td>
-                </tr>
-                { system.compareAtPrice ? <tr>
-                    <td>Compare At Price:</td>
-                    <td>${system.compareAtPrice}</td>
-                </tr> : ''}
-                <tr>
-                    <td>Vendor:</td>
-                    <td>{system.vendor}</td>
-                </tr>
-                <tr>
-                    <td>Last Updated:</td>
-                    <td>{system.lastUpdated}</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>Stock:</td>
+                        <td>{editing ? <input/> : system.stock}</td>
+                    </tr>
+                    <tr>
+                        <td>Price:</td>
+                        <td>{editing ? <input/> : system.price}</td>
+                    </tr>
+                    { system.compareAtPrice ? <tr>
+                        <td>Compare At Price:</td>
+                        <td>${system.compareAtPrice}</td>
+                    </tr> : ''}
+                    <tr>
+                        <td>Vendor:</td>
+                        <td>{system.vendor}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Updated:</td>
+                        <td>{system.lastUpdated}</td>
+                    </tr>
+                </tbody>
             </table>
-            {system.collections ? <ShopifyDetails {...system}/> : ''}
-            
-            
+            {name == "shopify" ? <ShopifyDetails {...system}/> : ''}
         </div>
+
         
     )
 }
 
 function ShopifyDetails(details) {
-    console.log(details)
     return (
         <>
         <table>
-            <tr>
-                <td>Weight:</td>
-                <td>{details.weight}{details.weightType}</td>
-            </tr>
-            <tr>
-                <td>Category:</td>
-                <td>{details.category}</td>
-            </tr>
-            <tr>
-                <td>Product Type:</td>
-                <td>{details.productType}</td>
-            </tr>
-            <tr>
-                <td>Collections:</td>
-                <td>{details.collections}</td>
-            </tr>
-            <tr>
-                <td>Status:</td>
-                <td><div className="status">{details.status}</div></td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td>Weight:</td>
+                    <td>{details.weight}{details.weightType}</td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td>{details.category}</td>
+                </tr>
+                <tr>
+                    <td>Product Type:</td>
+                    <td>{details.productType}</td>
+                </tr>
+                <tr>
+                    <td>Collections:</td>
+                    <td>{details.collections}</td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td><div className="status">{details.status}</div></td>
+                </tr>
+            </tbody>
         </table>
         <button>Add Variants</button>
         {details.variants.length > 0 ? <div>variants go here</div> : ""}

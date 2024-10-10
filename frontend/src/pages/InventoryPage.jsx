@@ -13,13 +13,10 @@ export default function InventoryPage() {
       async function initialFetch() {
         const tamResponse = await fetch(`${BASE_URL}/tam`)
         const tamData = await tamResponse.json()
-        console.log(tamData)
         setTamData(tamData)
   
         const shopifyResponse = await fetch(`${BASE_URL}/shopify`)
-        console.log(shopifyResponse)
         const shopifyData = await shopifyResponse.json()
-        console.log(shopifyData)
         setShopifyData(shopifyData)
       }
       initialFetch()
