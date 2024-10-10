@@ -52,9 +52,9 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] main search bar has to search both!
 - [ ] add filter button back
 - [x] nav bar
-- [ ] nav bar css 
+- [x] nav bar css 
 - [ ] error message for upload
-- [ ] success message for upload (maybe even list of items added)
+- [ ] success message for upload (maybe even list of items added) or nav to inventory
 - [ ] fix css for upload page
 - [X] add way to upload tam 
 - [X] and shopify data
