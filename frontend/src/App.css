@@ -234,6 +234,10 @@ button {
   transform: scale(1.1);
 }
 
+.search {
+  flex-direction: row;
+}
+
 
 @media (max-width: 1000px) {
   #invCard{

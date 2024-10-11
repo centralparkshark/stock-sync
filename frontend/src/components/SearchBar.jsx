@@ -4,10 +4,10 @@ export default function SearchBar({onSearch}) {
     const [search, setSearch] = useState('')
     
     return (
-        <div className="center">
+        <form className="center search" onSubmit={(e) => onSearch(e, search)}>
             <input type='text' placeholder='Search' onChange={(e) => setSearch(e.target.value)} value={search}/>
-            <button onClick={() => onSearch(search)}><i className=" fa fa-search"></i></button>
-        </div>
+            <button type="submit"><i className=" fa fa-search"></i></button>
+        </form>
     )
 }
 

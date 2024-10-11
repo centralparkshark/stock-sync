@@ -6,7 +6,6 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL
 
 
 export default function InventoryPage() {
-    const [search, setSearch] = useState("")
     const [tamData, setTamData] = useState([])
     const [shopifyData, setShopifyData] = useState([])
     const [ogData, setOgData] = useState([])
@@ -27,7 +26,8 @@ export default function InventoryPage() {
     }, [])
 
 
-    function handleSearch(searchTerm) {
+    function handleSearch(e, searchTerm) {
+      e.preventDefault()
       setTamData(searchInventory(ogData[0], searchTerm))
       setShopifyData(searchInventory(ogData[1], searchTerm))
 

@@ -55,12 +55,12 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] logic for unsynced and uncounted
 - [x] nav bar
 - [x] nav bar css 
-- [ ] error handling for upload
-- [ ] success message for upload (maybe even list of items added) or nav to inventory
+- [X] error handling for upload
+- [X] success message for upload (maybe even list of items added) or nav to inventory
 - [ ] fix css for upload page
 - [X] add way to upload tam 
 - [X] and shopify data
-- [ ] prevent duplicates by sku 
+- [X] prevent duplicates by sku 
 - [ ] remove leading zeros
 - [ ] create pagination
 - [ ] if synced, inventory values need to match (gotta think on this more)
@@ -69,13 +69,14 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] Way to check if prices are updated
 - [ ] Better match handling (right now only checks if sku exists) [in item.jsx]
 - [ ] Out of Stock Status Button
-- [ ] Way to Search both boards at once? and check if their data lines up
+- [X] Way to Search both boards at once? and check if their data lines up
 - [ ] combine tam and shopify routes?
 - [ ] multi-update
 - [ ] convert prices to dollar format
 - [ ] if shopify item is changed, it goes on export list
 - [ ] create export page
 - [ ] test other browsers
+- [ ] no results found for search
   
 ### Presentation
 - demonstration of the application
