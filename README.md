@@ -48,46 +48,7 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
-- [ ] reconfigure to use custom hook throughout code
-- [x] search bar testing
-- [x] main search bar has to search both!
-- [ ] clear search bar?
-- [X] add filter button back
-- [ ] logic for unsynced and uncounted
-- [x] nav bar
-- [x] nav bar css 
-- [X] error handling for upload
-- [X] success message for upload (maybe even list of items added) or nav to inventory
-- [ ] fix css for upload page
-- [X] add way to upload tam 
-- [X] and shopify data
-- [X] prevent duplicates by sku 
-- [ ] remove leading zeros
-- [ ] create pagination!! (or remove limit but that isn't good)
-- [ ] if synced, inventory values need to match (gotta think on this more)
-- [ ] Add logic handling for cycle counts to Item.jsx statuses
-- [ ] Figure out item variations (colors, sizes)
-- [ ] Way to check if prices are updated
-- [ ] Better match handling (right now only checks if sku exists) [in item.jsx]
-- [ ] Out of Stock Status Button
-- [X] Way to Search both boards at once? and check if their data lines up
-- [ ] combine tam and shopify routes?
-- [ ] multi-update
-- [ ] convert prices to dollar format
-- [ ] if shopify item is changed, it goes on export list
-- [ ] create export page
-- [ ] test other browsers
-- [ ] no results found for search
-- [ ] way to use filter and search at the same time
-- [ ] negative values didn't upload
-- [ ] archive (could be use for delete)
-- [ ] shopify as 10% of tam inventory for now
-- [ ] reminder since last update (home page)
-- [ ] if all items aligned, display ready for export
-- [ ] leave w/o saving function
-- [ ] add to export
-- [ ] shopify webhooks!!
-- [ ] stock override for tam? 
+Moved to [Trello Board](https://trello.com/invite/b/6709845087f63a995eb30e14/ATTId405e7caa0f3d17d0aba2622b474e1f0A44D44C9/stocksync)
   
 ### Presentation
 - demonstration of the application
