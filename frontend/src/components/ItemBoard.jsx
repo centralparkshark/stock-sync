@@ -14,21 +14,41 @@ export default function ItemBoard({title, inventory}) {
         setData(inventory); 
       }, [inventory]);
 
-    // function filterData(e) {
-    //     console.log(e.target.value)
-    //     setFilter(e.target.value)
-    //     // need to create a way to filter data (probably easier in MongoDB)
-    // }
+    useEffect(() => {
+        if (filter == "lowstock") {
+            setData(inventory.filter(item => 
+                item.stock <= 5
+              ))
+        } else if (filter == "outstock") {
+            setData(inventory.filter(item => 
+                item.stock <= 0
+              ))
+              
+        // figure out uncounted and unsynced logic
+        } else if (filter == "uncounted") {
+            setData(inventory.filter(item => 
+                item.stock <= 0
+              ))
+        } else if (filter == "unsynced") {
+            setData(inventory.filter(item => 
+                item.stock <= 0
+              ))
+        }
+        else {
+            setData(inventory)
+        }
+    }, [filter])
     
     
     return (
         <div className='items card'>
             <div className='titleBar'>
                 <h2>{title} Inventory:</h2>
+                <button onClick={() => setOpenFilters(!openFilters)}><i className=' fa fa-filter' ></i></button>
             </div>
             {openFilters && <div className="popUp">
                 <label htmlFor="status">Status:</label>
-                <select name="status" id="" onChange={(e) => filterData(e)} value={filter}>
+                <select name="status" id="" onChange={(e) => setFilter(e.target.value)} value={filter}>
                     <option value=""></option>    
                     <option value="uncounted">Uncounted</option>    
                     <option value="unsynced">Unsynced</option>    

@@ -51,7 +51,8 @@ will probably need to find a way so that testers don't mess with my data lol
 - [x] search bar testing
 - [x] main search bar has to search both!
 - [ ] clear search bar?
-- [ ] add filter button back
+- [X] add filter button back
+- [ ] logic for unsynced and uncounted
 - [x] nav bar
 - [x] nav bar css 
 - [ ] error handling for upload
@@ -74,7 +75,8 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] convert prices to dollar format
 - [ ] if shopify item is changed, it goes on export list
 - [ ] create export page
- 
+- [ ] test other browsers
+  
 ### Presentation
 - demonstration of the application
 - overview of the challenges endured and how I handled them
