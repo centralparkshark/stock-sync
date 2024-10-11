@@ -14,27 +14,27 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] Runs without errors
 - [X] Level of effort displayed in creativity, presentation, and user experience
 ### Core JavaScript
-- [ ] Proper usage of ES6 syntax and tools
+- [X] Proper usage of ES6 syntax and tools
 - [ ] Functions and classes to adhere to DRY principle
-- [ ] Promises, async and await
-- [ ] Axios or fetch to retrieve data from API
-- [ ] Sound programming logic
+- [X] Promises, async and await
+- [X] Axios or fetch to retrieve data from API
+- [X] Sound programming logic
 - [ ] Appropriate exception handling
 ### Database
-- [ ] Use MongoDB to create a database
-- [ ] Apply appropraite indexes to your database collections
+- [X] Use MongoDB to create a database
+- [X] Apply appropraite indexes to your database collections
 - [ ] Create reasonable schemes for data following data modeling best practices
 ### Server
 - [ ] Create a RESTful API using Node and Express (forgo HATEOAS)
 - [ ] API routes for all CRUD operations
-- [ ] Utlize MongoDB driver or Mongoose to interface with your database
+- [X] Utlize MongoDB driver or Mongoose to interface with your database
 ### Front-End Development
 - [X] Use React to create front-end
 - [X] Use CSS to style the application
-- [ ] Create atleast four different views or pages for the application
-- [ ] Create some form of navigation used across the pages, w/ React Router for page rendering
-- [ ] Use React Hooks or Redux for application state managemnet
-- [ ] Interface directly with the server and API you created 
+- [ ] Create at least four different views or pages for the application
+- [X] Create some form of navigation used across the pages, w/ React Router for page rendering
+- [X] Use React Hooks or Redux for application state managemnet
+- [X] Interface directly with the server and API you created 
 ### Presentation
 - [ ] Create a short overview of your application
 - [ ] Highlight use cases
@@ -50,12 +50,11 @@ will probably need to find a way so that testers don't mess with my data lol
 ### To - Do:
 - [x] search bar testing
 - [x] main search bar has to search both!
-- [ ] have to click main search bar twice to make it work..?
-- [ ] individual search bars?
+- [ ] clear search bar?
 - [ ] add filter button back
 - [x] nav bar
 - [x] nav bar css 
-- [ ] error message for upload
+- [ ] error handling for upload
 - [ ] success message for upload (maybe even list of items added) or nav to inventory
 - [ ] fix css for upload page
 - [X] add way to upload tam 

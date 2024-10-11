@@ -9,9 +9,8 @@ export default function InventoryPage() {
     const [search, setSearch] = useState("")
     const [tamData, setTamData] = useState([])
     const [shopifyData, setShopifyData] = useState([])
-    const [searchedTamData, setSearchedTamData] = useState(tamData)
-    const [searchedShopifyData, setSearchedShopifyData] = useState(shopifyData)
-  
+    const [ogData, setOgData] = useState([])
+
     useEffect(() => {
       async function initialFetch() {
         const tamResponse = await fetch(`${BASE_URL}/tam`)
@@ -21,19 +20,22 @@ export default function InventoryPage() {
         const shopifyResponse = await fetch(`${BASE_URL}/shopify`)
         const shopifyData = await shopifyResponse.json()
         setShopifyData(shopifyData)
+
+        setOgData([tamData, shopifyData])
       }
       initialFetch()
     }, [])
 
-    function handleSearch(search) {
-      setSearch(search)
-      setSearchedTamData(searchInventory(tamData))
-      setSearchedShopifyData(searchInventory(shopifyData))
+
+    function handleSearch(searchTerm) {
+      setTamData(searchInventory(ogData[0], searchTerm))
+      setShopifyData(searchInventory(ogData[1], searchTerm))
+
     }
 
-    function searchInventory(inventory) {
+    function searchInventory(inventory, searchTerm) {
       return inventory.filter(item => 
-        item.title.toLowerCase().includes(search.toLowerCase())
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
@@ -42,8 +44,8 @@ export default function InventoryPage() {
       <div className='card'>
         <SearchBar onSearch={handleSearch}/>
         <div className="" id="invCard">
-          <ItemBoard title={"TAM"} inventory={searchedTamData}/>
-          <ItemBoard title={"Shopify"} inventory={searchedShopifyData}/>
+          <ItemBoard title={"TAM"} inventory={tamData}/>
+          <ItemBoard title={"Shopify"} inventory={shopifyData}/>
         </div>
       </div>
     )

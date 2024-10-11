@@ -24,7 +24,7 @@ export default function Item(props) {
 
     const [synced, setSynced] = useState(isSynced)
 
-
+    
     return (
         <tr className="item" onClick={() => handleRowClick(sku)}>
             <td>{props.title}</td>

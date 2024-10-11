@@ -9,6 +9,7 @@ import UploadPage from './pages/UploadPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import InventoryPage, { BASE_URL } from './pages/InventoryPage.jsx'
 import ItemPage, { itemLoader } from './pages/ItemPage.jsx'
+import TasksPage from './pages/TasksPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/inventory",
         element: <InventoryPage />
+      },
+      {
+        path: "/tasks",
+        element: <TasksPage />
       },
     ]
   }

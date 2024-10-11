@@ -19,18 +19,12 @@ export default function ItemBoard({title, inventory}) {
     //     setFilter(e.target.value)
     //     // need to create a way to filter data (probably easier in MongoDB)
     // }
-    // // currently only works for the title
-    // // BUT IT WORKS
-    // function searchData(e) {
-    //     setSearch(e.target.value);
-    //     setData(inventory.filter(item => item.title.toLowerCase().includes(e.target.value.toLowerCase())))
-    // }
-
+    
+    
     return (
         <div className='items card'>
             <div className='titleBar'>
                 <h2>{title} Inventory:</h2>
-                <SearchBar />
             </div>
             {openFilters && <div className="popUp">
                 <label htmlFor="status">Status:</label>
