@@ -7,7 +7,7 @@ export default function UploadPage() {
     const [system, setSystem] = useState(undefined);
     const [file, setFile] = useState(undefined);
     const [error, setError] = useState("")
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState('')
 
     function sendFormData(e) {
         e.preventDefault()
@@ -26,14 +26,7 @@ export default function UploadPage() {
     }
 
     async function checkItemExists(item) {
-        console.log("checking", item)
-        const response = await fetch(`${BASE_URL}/${system}/${item.sku}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item) 
-        });
+        const response = await fetch(`${BASE_URL}/${system}/${item.sku}`)
         return response.ok; // Returns true if the item exists
     }
 
@@ -51,14 +44,29 @@ export default function UploadPage() {
                     })
                     if (res.ok) {
                         const result = await res.json()
-                        setSuccess(true)
+                        setSuccess("New items added!")
                         setError('')}
                     else {
                         const errorMessage = await res.text()
                         setError(`Error adding data: ${errorMessage || res.statusText}`)
                     }
                 } else {
-                    console.log('item already exists:', item)
+                    try {
+                        const response = await fetch(`${BASE_URL}/${system}/${item.sku}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(item)
+                        })
+                        if (response.ok) {
+                            setSuccess("Items updated!")
+                        }
+                    } catch (e) {
+                        console.error(e)
+                        setError(e)
+                    }
+
                 }
             } catch (e) {
                 console.error('Failed to send data to the database:', e);
@@ -85,7 +93,7 @@ export default function UploadPage() {
                     <button onClick={(e) => sendFormData(e)}>Upload</button>
             </form>
             {error ? <p>Error: {error}</p> : ''}
-            {success ? <p>Items successfully added!</p> : ''}
+            {success ? <p>{success}</p> : ''}
             </div>
         </div>
         </>
