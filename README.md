@@ -77,6 +77,7 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] create export page
 - [ ] test other browsers
 - [ ] no results found for search
+- [ ] way to use filter and search at the same time
   
 ### Presentation
 - demonstration of the application

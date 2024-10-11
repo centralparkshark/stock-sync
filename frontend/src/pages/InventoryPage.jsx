@@ -8,35 +8,44 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL
 export default function InventoryPage() {
     const [tamData, setTamData] = useState([])
     const [shopifyData, setShopifyData] = useState([])
-    const [ogData, setOgData] = useState([])
 
     useEffect(() => {
       async function initialFetch() {
         const tamResponse = await fetch(`${BASE_URL}/tam`)
-        const tamData = await tamResponse.json()
-        setTamData(tamData)
+        const tamJSON = await tamResponse.json()
+        setTamData(tamJSON)
   
         const shopifyResponse = await fetch(`${BASE_URL}/shopify`)
-        const shopifyData = await shopifyResponse.json()
-        setShopifyData(shopifyData)
-
-        setOgData([tamData, shopifyData])
+        const shopifyJSON = await shopifyResponse.json()
+        setShopifyData(shopifyJSON)
       }
       initialFetch()
     }, [])
 
 
-    function handleSearch(e, searchTerm) {
+    async function handleSearch(e, searchTerm) {
       e.preventDefault()
-      setTamData(searchInventory(ogData[0], searchTerm))
-      setShopifyData(searchInventory(ogData[1], searchTerm))
+      const tamRes = await fetch(`${BASE_URL}/tam?search=${searchTerm}`);
+      const tamJSON = await tamRes.json()
+      setTamData(tamJSON)
 
+      const shopifyRes = await fetch(`${BASE_URL}/shopify?search=${searchTerm}`);
+      const shopifyJSON = await shopifyRes.json()
+      setShopifyData(shopifyJSON)
     }
 
-    function searchInventory(inventory, searchTerm) {
-      return inventory.filter(item => 
-        item.title.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    async function handleFilter(status) {
+      let num;
+      if (status == "lowstock") {
+        num = 5
+      }
+      const tamRes = await fetch(`${BASE_URL}/tam?status=${num}`);
+      const tamJSON = await tamRes.json()
+      setTamData(tamJSON)
+
+      // const shopifyRes = await fetch(`${BASE_URL}/shopify?search=${searchTerm}`);
+      // const shopifyJSON = await shopifyRes.json()
+      // setShopifyData(shopifyJSON)
     }
 
 
@@ -44,8 +53,8 @@ export default function InventoryPage() {
       <div className='card'>
         <SearchBar onSearch={handleSearch}/>
         <div className="" id="invCard">
-          <ItemBoard title={"TAM"} inventory={tamData}/>
-          <ItemBoard title={"Shopify"} inventory={shopifyData}/>
+          <ItemBoard title={"TAM"} inventory={tamData} onFilter={handleFilter}/>
+          <ItemBoard title={"Shopify"} inventory={shopifyData} onFilter={handleFilter}/>
         </div>
       </div>
     )

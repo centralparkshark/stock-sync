@@ -3,8 +3,9 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import SearchBar from './SearchBar'
+import { BASE_URL } from '../pages/InventoryPage'
 
-export default function ItemBoard({title, inventory}) {
+export default function ItemBoard({title, inventory, onFilter}) {
 
     const [data, setData] = useState(inventory)
     const [openFilters, setOpenFilters] = useState(false)
@@ -13,33 +14,12 @@ export default function ItemBoard({title, inventory}) {
     useEffect(() => {
         setData(inventory); 
       }, [inventory]);
+    
+    function filterData(e) {
+        setFilter(e.target.value)
+        onFilter(e.target.value)
+    }
 
-    useEffect(() => {
-        if (filter == "lowstock") {
-            setData(inventory.filter(item => 
-                item.stock <= 5
-              ))
-        } else if (filter == "outstock") {
-            setData(inventory.filter(item => 
-                item.stock <= 0
-              ))
-              
-        // figure out uncounted and unsynced logic
-        } else if (filter == "uncounted") {
-            setData(inventory.filter(item => 
-                item.stock <= 0
-              ))
-        } else if (filter == "unsynced") {
-            setData(inventory.filter(item => 
-                item.stock <= 0
-              ))
-        }
-        else {
-            setData(inventory)
-        }
-    }, [filter])
-    
-    
     return (
         <div className='items card'>
             <div className='titleBar'>
@@ -48,7 +28,7 @@ export default function ItemBoard({title, inventory}) {
             </div>
             {openFilters && <div className="popUp">
                 <label htmlFor="status">Status:</label>
-                <select name="status" id="" onChange={(e) => setFilter(e.target.value)} value={filter}>
+                <select name="status" id="" onChange={(e) => filterData(e)} value={filter}>
                     <option value=""></option>    
                     <option value="uncounted">Uncounted</option>    
                     <option value="unsynced">Unsynced</option>    
@@ -65,7 +45,7 @@ export default function ItemBoard({title, inventory}) {
                 </tr>
             </thead>
             <tbody>
-                {data.map(item => (<Item key={item._id} {...item}></Item>))}
+                {data ? data.map(item => (<Item key={item._id} {...item}></Item>)) : "No results found."}
             </tbody>
         </table>
         </div>

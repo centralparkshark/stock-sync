@@ -3,28 +3,7 @@ import TamItems from "../models/TamItems.js";
 
 const router = Router();
 
-// /tam
-router.get('/', async (req, res) => {
-    try {
-        const results = await TamItems.find({}).limit(20)
-        res.status(200).json(results)
-    } catch(e) {
-        res.status(400).json(e)
-    }
-})
 
-// create pagination
-
-
-router.post('/', async (req, res) => {
-    try {
-        let docs = req.body
-        const results = await TamItems.insertMany(docs)
-        res.send(results).status(204)
-    } catch(e) {
-        res.status(400).json(e)
-    }
-})
 
 // /tam:sku
 router.get('/:sku', async (req, res) => {
@@ -71,5 +50,37 @@ router.patch('/:sku', async (req, res) => {
         res.status(400).json(e)
     }
 })
+
+// create search
+
+
+// /tam
+router.get('/', async (req, res) => {
+    try {
+        const {search, status} = req.query
+        const query = {
+            $and: [
+                search ? {title : {$regex: search, $options: 'i'}} : {},
+                status ? {stock : {$lt: Number(status)}} : {}
+            ]
+        }
+        const results = await TamItems.find(query).limit(20)
+        res.status(200).json(results)
+    } catch(e) {
+        res.status(400).json(e)
+    }
+})
+
+
+router.post('/', async (req, res) => {
+    try {
+        let docs = req.body
+        const results = await TamItems.insertMany(docs)
+        res.send(results).status(204)
+    } catch(e) {
+        res.status(400).json(e)
+    }
+})
+
 
 export default router;
