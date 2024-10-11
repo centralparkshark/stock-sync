@@ -155,6 +155,7 @@ function SimpleDisplay({name, ...system}) {
                 </>
             
             : ''}
+            {name == 'tam' ? <button>Sync Item</button> : ''}
         </div>
 
         

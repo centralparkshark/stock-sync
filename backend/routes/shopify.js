@@ -7,7 +7,7 @@ const router = Router();
 // /shopify
 router.get('/', async (req, res) => {
     try {
-        const results = await ShopifyItems.find({}).limit(20)
+        const results = await ShopifyItems.find({})
         res.status(200).json(results)
     } catch(e) {
         res.status(400).json(e)

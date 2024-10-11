@@ -1,9 +1,6 @@
 import Item from './Item'
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import SearchBar from './SearchBar'
-import { BASE_URL } from '../pages/InventoryPage'
 
 export default function ItemBoard({title, inventory, onFilter}) {
 

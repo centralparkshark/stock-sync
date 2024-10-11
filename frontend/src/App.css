@@ -158,6 +158,7 @@ th:nth-child(3) {
 .navBar2 {
   display: flex;
   gap: 2rem;
+  align-items: center;
 }
 
 .navBar2>* {

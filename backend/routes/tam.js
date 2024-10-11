@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
                 status ? {stock : {$lt: Number(status)}} : {}
             ]
         }
-        const results = await TamItems.find(query).limit(20)
+        const results = await TamItems.find(query)
         res.status(200).json(results)
     } catch(e) {
         res.status(400).json(e)

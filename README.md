@@ -62,7 +62,7 @@ will probably need to find a way so that testers don't mess with my data lol
 - [X] and shopify data
 - [X] prevent duplicates by sku 
 - [ ] remove leading zeros
-- [ ] create pagination
+- [ ] create pagination!! (or remove limit but that isn't good)
 - [ ] if synced, inventory values need to match (gotta think on this more)
 - [ ] Add logic handling for cycle counts to Item.jsx statuses
 - [ ] Figure out item variations (colors, sizes)
@@ -78,6 +78,15 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] test other browsers
 - [ ] no results found for search
 - [ ] way to use filter and search at the same time
+- [ ] negative values didn't upload
+- [ ] archive (could be use for delete)
+- [ ] shopify as 10% of tam inventory for now
+- [ ] reminder since last update (home page)
+- [ ] if all items aligned, display ready for export
+- [ ] leave w/o saving function
+- [ ] add to export
+- [ ] shopify webhooks!!
+- [ ] stock override for tam? 
   
 ### Presentation
 - demonstration of the application
