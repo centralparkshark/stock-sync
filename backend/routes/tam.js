@@ -40,6 +40,23 @@ router.get('/:sku', async (req, res) => {
     }
 })
 
+router.post('/:sku', async (req, res) => {
+    try {
+        const {sku} = req.params;
+        const existingItem = await TamItems.findOne({sku: sku})
+        if (!existingItem) {
+            const newItem = await TamItems.create(req.body)
+            res.send(newItem).status(201)
+        } else {
+            console.log("Item exists.")
+        }
+    } catch(e) {
+        console.log(e)
+        res.status(400).json(e)
+    }
+})
+
+
 router.patch('/:sku', async (req, res) => {
     try {
         const {sku} = req.params;
