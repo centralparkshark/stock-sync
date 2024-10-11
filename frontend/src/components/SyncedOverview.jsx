@@ -22,22 +22,19 @@ export default function SyncedOverview() {
     }, [totalItems]);
     
     return (
-        <>
-        <h2 className="titleBar">Overview:</h2>
         <div className="syncedOverview card">
-            <div className="card">Alerts!</div>
+            <h2 className="titleBar">Dashboard:</h2>
+            <div className="innerCard">Alerts!</div>
             <div> 
-                <div className="card">Out Of Stock: {outOfStock}</div>
-                <div className="card">Low Stock: {lowStock}</div>
-                <div className="card">Total Items: {totalInventory}</div>
+                <div className="innerCard">Out Of Stock: {outOfStock}</div>
+                <div className="innerCard">Low Stock: {lowStock}</div>
+                <div className="innerCard">Total Items: {totalInventory}</div>
                 {/* <div className="card">Unsynced: {unsynced}</div> */}
             </div>
             <div className="center">
                 <Link to="upload"><button>Upload New Data</button></Link>
             </div>
-            
         </div>
-        </>
     )
 }
 

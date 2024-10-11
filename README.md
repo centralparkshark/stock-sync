@@ -48,6 +48,7 @@ will probably need to find a way so that testers don't mess with my data lol
 
 
 ### To - Do:
+- [ ] reconfigure to use custom hook throughout code
 - [x] search bar testing
 - [x] main search bar has to search both!
 - [ ] clear search bar?
