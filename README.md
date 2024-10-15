@@ -1,8 +1,18 @@
-# Stock Sync
+# Stock Sync - Inventory Alignment App
 Integration for two inventory systems (TAM Retail and Shopify) which each hold partial numbers for inventory. It highlights the differences and navigates users towards correction. 
+
+Stock Sync is built using the Javascript MERN Stack:
+- MongoDB w/ Mongoose
+- Express.js
+- React
+- Node.js
 
 ## Link to Live Site
 will probably need to find a way so that testers don't mess with my data lol
+
+## Features
+- import CSV files to update database
+- search and filter data from two collections simultaneously
 
 ## Requirements
 ### Project Structure Standardization, and Convention
@@ -15,7 +25,7 @@ will probably need to find a way so that testers don't mess with my data lol
 - [X] Level of effort displayed in creativity, presentation, and user experience
 ### Core JavaScript
 - [X] Proper usage of ES6 syntax and tools
-- [ ] Functions and classes to adhere to DRY principle
+- [X] Functions and classes to adhere to DRY principle
 - [X] Promises, async and await
 - [X] Axios or fetch to retrieve data from API
 - [X] Sound programming logic
@@ -23,7 +33,7 @@ will probably need to find a way so that testers don't mess with my data lol
 ### Database
 - [X] Use MongoDB to create a database
 - [X] Apply appropraite indexes to your database collections
-- [ ] Create reasonable schemes for data following data modeling best practices
+- [X] Create reasonable schemes for data following data modeling best practices
 ### Server
 - [ ] Create a RESTful API using Node and Express (forgo HATEOAS)
 - [ ] API routes for all CRUD operations

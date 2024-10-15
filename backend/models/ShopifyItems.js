@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const shopifySchema = new mongoose.Schema({
-    sku: { type: String, required: true}, // default sku if only one item
+    sku: { type: String, required: true}, // default sku if only one item (no variants)
     title: { type: String, required: true},
     description: { type: String }, 
     stock: { type: Number, default: 0},
@@ -13,7 +13,7 @@ const shopifySchema = new mongoose.Schema({
     vendor: {type: String, default: "Heinz History Center"}, 
     collections: {type: [String]},
     status: {type: String, enum: ["draft", "active", "archived"], default: "draft", required: true},
-    lastUpdated: {type: String, required: true}, // date
+    lastUpdated: {type: String, required: true}, // date, change on new data upload but not on edit
     variants: [
         {
             sku: { type: String }, // variant sku

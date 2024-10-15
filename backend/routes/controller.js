@@ -11,6 +11,7 @@ const createRouter = (model) => {
     router.get('/:sku', (req, res) => handleGetItem(model, req, res))
     router.post('/:sku', (req, res) => handlePostItem(model, req, res))
     router.patch('/:sku', (req, res) => handlePatchItem(model, req, res))
+    router.delete('/:sku', (req, res) => handleDeleteItem(model, req, res))
 
     return router;
 }
@@ -32,7 +33,7 @@ async function handleGetItem(model, req, res) {
 }
 
 
-// CREATE (ONE)
+// CREATE (ONE, :/sku)
 async function handlePostItem(model, req, res) {
     const {sku} = req.params;
     try {
@@ -48,7 +49,7 @@ async function handlePostItem(model, req, res) {
     }
 }
 
-// UPDATE 
+// UPDATE (:/sku)
 async function handlePatchItem(model, req, res) {
     const {sku} = req.params;
     const updatedFields = req.body;
@@ -59,6 +60,20 @@ async function handlePatchItem(model, req, res) {
             {new: true}
         );
         res.status(200).json(updatedItem);
+    } catch(e) {
+        res.status(400).json(e)
+    }
+}
+
+// DELETE (:/sku)
+async function handleDeleteItem(model, req, res) {
+    const {sku} = req.params;
+    try {
+        const deletedItem = await model.findOneAndDelete({ sku });
+        if (!deletedItem) {
+            return res.status(404).json({ message: 'SKU not found.' });
+        }
+        res.status(200).json({ message: 'Item deleted successfully.', item: deletedItem });
     } catch(e) {
         res.status(400).json(e)
     }
