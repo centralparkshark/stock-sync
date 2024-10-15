@@ -40,27 +40,3 @@ app.listen(PORT, () => {
     console.log('Listening on Port:', PORT)
 })
 
-// possible routes 
-// main views:
-// - home page
-// - compare page (/inventory)
-    // single search bar that searches both at the same time
-// - shopify (/inventory/shopify)
-    // items missing any fields, price updates, low stock warnings
-// - tam (/inventory/tam)
-    // - downloaded csv, low stock warnings (prompt to reorder)
-// - indiviudal item pages (/inventory/:key)
-
-// CRUD Routes for CSV creator to upload to Shopify
-// CREATE (POST)
-    // new db for objects to be posted on shopify
-// READ (GET)
-    // all searches, inventory pages, will need to figure out pagination
-// UPDATE (PATCH)
-    // hand edit with needed fields (upload photo? might be too difficult)
-// DELETE (DELETE)
-    // delete mistakes from CSV uploaded
-
-// do we know what happens if i accidentally make aa duplicate item on shopify?
-// all need to be in draft mode so i have to double check before publishing
-
