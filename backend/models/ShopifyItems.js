@@ -4,6 +4,7 @@ const shopifySchema = new mongoose.Schema({
     sku: { type: String, required: true}, // default sku if only one item (no variants)
     title: { type: String, required: true},
     description: { type: String }, 
+    media: {type: String}, 
     stock: { type: Number, default: 0},
     price:{ type: Number },
     compareAtPrice: { type: Number },
@@ -20,6 +21,7 @@ const shopifySchema = new mongoose.Schema({
             sku: { type: String }, // variant sku
             stock: { type: Number, default: 0},
             price:{ type: Number },
+            media: {type: String}, 
             compareAtPrice: { type: Number },
             weight: {type: Number },
             weightType: {type: String },

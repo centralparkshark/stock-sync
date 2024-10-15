@@ -1,17 +1,20 @@
 import { useLoaderData } from "react-router-dom"
 import { BASE_URL } from "./InventoryPage"
 import { useState, useEffect } from "react"
+import AddItemPopUp from "../components/AddItemPopUp"
+import ItemForm from "../components/ItemForm"
 
 export default function ItemPage() {
     const {tam, shopify } = useLoaderData()
     const [shopifyData, setShopifyData] = useState(shopify[0] || null)
     const tamData = tam[0]
+    const [popUpOpen, setPopUpOpen] = useState(false)
 
     function NotFound({name, sku}) {
         return (
             <div className="card">
                 <h2>No item found.</h2>
-                {name == "shopify" ? <button onClick={() => handleCreateItem(sku)}>Create item?</button> : ''}
+                {name == "shopify" ? <button onClick={() => setPopUpOpen(true)}>Create item?</button> : ''}
             </div>
         )
     }    
@@ -29,7 +32,6 @@ export default function ItemPage() {
                 const newShopifyData = await fetch(`${BASE_URL}/shopify/${sku}`);
                 if (newShopifyData.ok) {
                     const data = await newShopifyData.json()
-                    console.log(data)
                     setShopifyData(data[0])
                 } else {
                     console.error("Failed to fetch new data.")
@@ -42,13 +44,14 @@ export default function ItemPage() {
 
     return (
         <div className="flex relative">
+            {popUpOpen && <AddItemPopUp setPopUpOpen={setPopUpOpen}/>}
             <div className="half">
                 <h1>TAM</h1>
-                {tamData ? <SimpleDisplay {...tamData} name="tam"/> : <NotFound name ="tam"/>}            
+                {tamData ? <ItemForm {...tamData} name="tam"/> : <NotFound name ="tam"/>}            
             </div>
             <div className="half">
                 <h1>Shopify</h1>
-                {shopifyData ? <SimpleDisplay {...shopifyData} name="shopify"/> : <NotFound name ="shopify"  sku={tamData.sku}/>}   
+                {shopifyData ? <ItemForm {...shopifyData} name="shopify"/> : <NotFound name ="shopify"  sku={tamData.sku}/>}   
             </div>
             
             
@@ -57,141 +60,6 @@ export default function ItemPage() {
             </div>
         </div>
         
-    )
-}
-
-
-function SimpleDisplay({name, ...itemData}) {
-    const [editing, setEditing] = useState(false)
-    const [data, setData] = useState(itemData)
-    const [input, setInput] = useState(itemData)
-
-    
-    // for change of input fields
-    function handleChange(e) {
-        const {name, value} = e.target;
-        setInput(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
-
-    
-    // after editing
-    async function saveEdits(name) {
-        // data to send
-        const payload = {
-            stock: Number(input.stock),
-            price: Number(input.price),
-            vendor: input.vendor,
-            weight: Number(input.weight),
-            weightType: input.weightType,
-        }
-
-        try {
-            const response = await fetch(`${BASE_URL}/${name}/${data.sku}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload)
-            })
-            if (response.ok) {
-                // set data 
-                const updatedData = await response.json()
-                setData(updatedData)
-                }
-            setEditing(false)
-        } catch (e) {
-            console.error(e)
-        }
-
-
-    }
-
-    
-    return (
-        <div className="card">
-            <div className="editButton">
-                {!editing ? 
-                    <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> 
-                    : 
-                    <button onClick={() => saveEdits(name)}>Save Changes</button>}
-            </div>
-            <h2>{data.title}</h2>
-            <img src={data.media} alt={data.title} />
-            <p>SKU: {data.sku}</p>
-            <ItemDetails data={data} editing={editing} input={input} handleChange={handleChange}/>
-            {name == "shopify" && <ShopifyDetails data={data} editing={editing} input={input} handleChange={handleChange}/>}
-            {name == 'tam' && <button>Sync Item</button>}
-        </div>
-
-        
-    )
-}
-
-function ItemDetails({ data, editing, input, handleChange }) {
-    return (
-        <table>
-                <tbody>
-                    <tr>
-                        <td>Stock:</td>
-                        <td>{editing ? <input name="stock" type="number" onChange={handleChange} value={input.stock}/> : data.stock}</td>
-                    </tr>
-                    <tr>
-                        <td>Price:</td>
-                        <td>{editing ? <input name="price" type="number" onChange={handleChange} value={input.price}/> : data.price}</td>
-                    </tr>
-                    { data.compareAtPrice ? <tr>
-                        <td>Compare At Price:</td>
-                        <td>{editing ? <input name="compareAtPrice" type="number" onChange={handleChange} value={input.compareAtPrice}/> : data.compareAtPrice}</td>
-                    </tr> : ''}
-                    <tr>
-                        <td>Vendor:</td>
-                        <td>{editing ? <input name="vendor" type="text" onChange={handleChange} value={input.vendor}/> : data.vendor}</td>
-                    </tr>
-                    <tr>
-                        <td>Last Updated:</td>
-                        <td>{data.lastUpdated}</td>
-                    </tr>
-                </tbody>
-            </table>
-    )
-}
-
-function ShopifyDetails({ data, editing, input, handleChange }) {
-    return (
-        <>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>Weight:</td>
-                        <td>{editing ? 
-                        <>
-                            <input name="weight" type="number" onChange={handleChange} value={input.weight}/>
-                            <input name="weightType" type="text" onChange={handleChange} value={input.weightType}/>
-                        </>
-                        : <>{data.weight}{data.weightType}</>}</td>
-                    </tr>
-                    <tr>
-                        <td>Category:</td>
-                        <td>{data.category}</td>
-                    </tr>
-                    <tr>
-                        <td>Product Type:</td>
-                        <td>{data.productType}</td>
-                    </tr>
-                    <tr>
-                        <td>Collections:</td>
-                        <td>{data.collections}</td>
-                    </tr>
-                    <tr>
-                        <td>Status:</td>
-                        <td><div className="status">{data.status}</div></td>
-                    </tr>
-                </tbody>
-            </table>
-        </>
     )
 }
 
