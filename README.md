@@ -41,6 +41,8 @@ will probably need to find a way so that testers don't mess with my data lol
 - [ ] Highlight technical functionality of the application
 - [ ] Discuss what I've learned
 - [ ] Discuss future additional features
+### Deployment
+- [ ] Deploy site (both Front-End(Vercel) and Back-End (Render))
 ### Extra Credit 
 - [ ] Agile principles and Scrum framework
 - [ ] Track using JIRA or similar

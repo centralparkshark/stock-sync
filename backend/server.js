@@ -1,6 +1,5 @@
 import express from 'express'
-import shopifyRoutes from './routes/shopify.js'
-import tamRoutes from './routes/tam.js'
+import { tamRouter, shopifyRouter } from './routes/controller.js';
 import connectToDb from './db.js';
 import cors from 'cors'
 
@@ -12,8 +11,8 @@ connectToDb();
 
 app.use(cors())
 app.use(express.json())
-app.use("/shopify", shopifyRoutes)
-app.use("/tam", tamRoutes)
+app.use("/shopify", shopifyRouter)
+app.use("/tam", tamRouter)
 
 
 // test route
