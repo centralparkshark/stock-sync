@@ -2,21 +2,50 @@ import { useLoaderData } from "react-router-dom"
 import { BASE_URL } from "./InventoryPage"
 import { useState } from "react"
 
-
 export default function ItemPage() {
     const {tam, shopify } = useLoaderData()
+    const [shopifyData, setShopifyData] = useState(shopify[0])
     const tamData = tam[0]
-    const shopifyData = shopify[0]
+
+    function NotFound({name, sku}) {
+
+    
+        return (
+            <div className="card">
+                <h2>No item found.</h2>
+                {name == "shopify" ? <button onClick={() => handleCreateItem(sku)}>Create item?</button> : ''}
+            </div>
+        )
+    }    
+
+    async function handleCreateItem(sku) {
+        try {
+            const response = await fetch(`${BASE_URL}/shopify`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify(tamData),
+            })
+            console.log(response)
+            if (response.ok) {
+                const newShopifyData = await fetch(`${BASE_URL}/shopify/${sku}`);
+                setShopifyData(newShopifyData)
+            }
+        } catch(e) {
+            console.error(e)
+        }
+    }
 
     return (
-        <div className="flex">
+        <div className="flex relative">
             <div className="half">
                 <h1>TAM</h1>
                 {tamData ? <SimpleDisplay {...tamData} name="tam"/> : <NotFound name ="tam"/>}            
             </div>
             <div className="half">
                 <h1>Shopify</h1>
-                {shopifyData ? <SimpleDisplay {...shopifyData} name="shopify"/> : <NotFound name ="shopify"/>}   
+                {shopifyData ? <SimpleDisplay {...shopifyData} name="shopify"/> : <NotFound name ="shopify"  sku={tamData.sku}/>}   
             </div>
             
             
@@ -28,19 +57,12 @@ export default function ItemPage() {
     )
 }
 
-function NotFound({name}) {
-    return (
-        <div className="card">
-            <h2>No item found.</h2>
-            {name == "shopify" ? <button>Create item?</button> : ''}
-        </div>
-    )
-}
 
 function SimpleDisplay({name, ...itemData}) {
     const [editing, setEditing] = useState(false)
     const [data, setData] = useState(itemData)
     const [input, setInput] = useState(itemData)
+
     
     // for change of input fields
     function handleChange(e) {
@@ -52,7 +74,7 @@ function SimpleDisplay({name, ...itemData}) {
     }
 
     
-
+    // after editing
     async function saveEdits(name) {
         // data to send
         const payload = {
@@ -166,8 +188,6 @@ function ShopifyDetails({ data, editing, input, handleChange }) {
                     </tr>
                 </tbody>
             </table>
-            <button>Add Variants</button>
-            {data.variants.length > 0 ? <div>variants go here</div> : ""}
         </>
     )
 }
