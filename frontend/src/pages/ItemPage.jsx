@@ -5,19 +5,18 @@ import { useState } from "react"
 
 export default function ItemPage() {
     const {tam, shopify } = useLoaderData()
-
-    let tamData = tam[0]
-    let shopifyData = shopify[0]
+    const tamData = tam[0]
+    const shopifyData = shopify[0]
 
     return (
         <div className="flex">
             <div className="half">
                 <h1>TAM</h1>
-                {tamData ? <SimpleDisplay {...tamData} name="tam"/> : <NotFound />}            
+                {tamData ? <SimpleDisplay {...tamData} name="tam"/> : <NotFound name ="tam"/>}            
             </div>
             <div className="half">
                 <h1>Shopify</h1>
-                {shopifyData ? <SimpleDisplay {...shopifyData} name="shopify"/> : <NotFound />}   
+                {shopifyData ? <SimpleDisplay {...shopifyData} name="shopify"/> : <NotFound name ="shopify"/>}   
             </div>
             
             
@@ -29,28 +28,33 @@ export default function ItemPage() {
     )
 }
 
-function NotFound() {
+function NotFound({name}) {
     return (
-        <>
+        <div className="card">
             <h2>No item found.</h2>
-            <button>Create item?</button>
-        </>
+            {name == "shopify" ? <button>Create item?</button> : ''}
+        </div>
     )
 }
 
-function SimpleDisplay({name, ...system}) {
-    async function saveEdits(name) {
-        console.log(name)
-        setEditing(!editing)
-
-        // i think last updated should only change if stock is changed
-        setData(prevData => ({
-            ...prevData,
-            stock: Number(input.stock),
-            price: Number(input.price),
+function SimpleDisplay({name, ...itemData}) {
+    const [editing, setEditing] = useState(false)
+    const [data, setData] = useState(itemData)
+    const [input, setInput] = useState(itemData)
+    
+    // for change of input fields
+    function handleChange(e) {
+        const {name, value} = e.target;
+        setInput(prev => ({
+            ...prev,
+            [name]: value
         }))
+    }
 
-        // need to send a post to db
+    
+
+    async function saveEdits(name) {
+        // data to send
         const payload = {
             stock: Number(input.stock),
             price: Number(input.price),
@@ -60,7 +64,6 @@ function SimpleDisplay({name, ...system}) {
         }
 
         try {
-            console.log(payload)
             const response = await fetch(`${BASE_URL}/${name}/${data.sku}`, {
                 method: 'PATCH',
                 headers: {
@@ -68,6 +71,12 @@ function SimpleDisplay({name, ...system}) {
                 },
                 body: JSON.stringify(payload)
             })
+            if (response.ok) {
+                // set data 
+                const updatedData = await response.json()
+                setData(updatedData)
+                }
+            setEditing(false)
         } catch (e) {
             console.error(e)
         }
@@ -75,27 +84,30 @@ function SimpleDisplay({name, ...system}) {
 
     }
 
-    function handleChange(e) {
-        const {name, value} = e.target;
-        setInput(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
     
-    const [editing, setEditing] = useState(false)
-    const [data, setData] = useState(system)
-    const [input, setInput] = useState(system)
-
     return (
         <div className="card">
             <div className="editButton">
-                {!editing ? <div className=" fa fa-edit fa-2x" onClick={() => setEditing(!editing)}></div> : <button onClick={() => saveEdits(name)}>Save Changes</button>}
+                {!editing ? 
+                    <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> 
+                    : 
+                    <button onClick={() => saveEdits(name)}>Save Changes</button>}
             </div>
             <h2>{data.title}</h2>
             <img src={data.media} alt={data.title} />
             <p>SKU: {data.sku}</p>
-            <table>
+            <ItemDetails data={data} editing={editing} input={input} handleChange={handleChange}/>
+            {name == "shopify" && <ShopifyDetails data={data} editing={editing} input={input} handleChange={handleChange}/>}
+            {name == 'tam' && <button>Sync Item</button>}
+        </div>
+
+        
+    )
+}
+
+function ItemDetails({ data, editing, input, handleChange }) {
+    return (
+        <table>
                 <tbody>
                     <tr>
                         <td>Stock:</td>
@@ -119,67 +131,46 @@ function SimpleDisplay({name, ...system}) {
                     </tr>
                 </tbody>
             </table>
-            {name == "shopify" ? 
-                <>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Weight:</td>
-                                <td>{editing ? 
-                                <>
-                                    <input name="weight" type="number" onChange={handleChange} value={input.weight}/>
-                                    <input name="weightType" type="text" onChange={handleChange} value={input.weightType}/>
-                                </>
-                                : <>{data.weight}{data.weightType}</>}</td>
-                            </tr>
-                            <tr>
-                                <td>Category:</td>
-                                <td>{data.category}</td>
-                            </tr>
-                            <tr>
-                                <td>Product Type:</td>
-                                <td>{data.productType}</td>
-                            </tr>
-                            <tr>
-                                <td>Collections:</td>
-                                <td>{data.collections}</td>
-                            </tr>
-                            <tr>
-                                <td>Status:</td>
-                                <td><div className="status">{data.status}</div></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button>Add Variants</button>
-                    {data.variants.length > 0 ? <div>variants go here</div> : ""}
-                </>
-            
-            : ''}
-            {name == 'tam' ? <button>Sync Item</button> : ''}
-        </div>
-
-        
     )
 }
 
-
-// variants: [
-//     {
-//         sku: { type: String }, // variant sku
-//         stock: { type: Number, default: 0},
-//         price:{ type: Number },
-//         compareAtPrice: { type: Number },
-//         weight: { type: Number },
-//         weightType: { type: String },
-
-//         options: [
-//             {
-//                 name: { type: String }, // ex. size, color
-//                 value: { type: String }, //e ex. red, Large
-//             }
-//         ]
-//     }
-// ]
+function ShopifyDetails({ data, editing, input, handleChange }) {
+    return (
+        <>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Weight:</td>
+                        <td>{editing ? 
+                        <>
+                            <input name="weight" type="number" onChange={handleChange} value={input.weight}/>
+                            <input name="weightType" type="text" onChange={handleChange} value={input.weightType}/>
+                        </>
+                        : <>{data.weight}{data.weightType}</>}</td>
+                    </tr>
+                    <tr>
+                        <td>Category:</td>
+                        <td>{data.category}</td>
+                    </tr>
+                    <tr>
+                        <td>Product Type:</td>
+                        <td>{data.productType}</td>
+                    </tr>
+                    <tr>
+                        <td>Collections:</td>
+                        <td>{data.collections}</td>
+                    </tr>
+                    <tr>
+                        <td>Status:</td>
+                        <td><div className="status">{data.status}</div></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>Add Variants</button>
+            {data.variants.length > 0 ? <div>variants go here</div> : ""}
+        </>
+    )
+}
 
 // loader function
 export const itemLoader = async (params) => {
@@ -190,47 +181,3 @@ export const itemLoader = async (params) => {
     const shopify = await shopifyRes.json()
     return {tam, shopify}
 }
-
-
-
-
-// Needed Sections for Shopify
-// Title
-// Description (Body (HTML))
-// Media
-// Category
-
-// Variants
-    // SKU and/or Barcode
-    // Price
-    // Stock
-    // If sale, needs og price (Cmpare At)
-    // Weight (oz) (needed for shipping)
-
-// Status (Active, Draft, Archived)
-// Publishing
-
-// Product type (clothing - if this is correct tax should be automatically correct)
-// Vendor (ask allison if I should start adding those) 
-// Collections 
-// Tags
-
-// Pricing
-    // Price
-    // Compare at Price (if on sale)
-    // Cost per item
-    // profit
-    // margin
-
-
-// Other Sections for TAM
-// whatever goes on an item receiver (og price, calculates margin?) 
-// ^ this is on shopify as well thought I think
-
-// Sections I want to add
-// Low stock (should probably be a percent)
-// Backstock location
-
-// Notes
-// What to do about multiple store locations (FP, HHC, MC, Online)
-

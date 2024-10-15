@@ -15,12 +15,20 @@ export default function UploadPage() {
         if (file) {
             Papa.parse(file, {
                 complete: function (results) {
-                    results.data.map(item => (item.lastUpdated = date))
-                    sendToDB(results.data)
+                    const processedData = results.data.map(item => {
+                        return {
+                            ...item,
+                            lastUpdated: date.toISOString()
+                        };                
+                    })
+                    sendToDB(processedData)
                 },
                 header: true,
                 skipEmptyLines: true
             })
+        } else {
+            console.error("No file selected.")
+            return;
         }
         
     }

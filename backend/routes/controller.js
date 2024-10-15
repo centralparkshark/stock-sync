@@ -61,6 +61,7 @@ async function handlePatchItem(model, req, res) {
         );
         res.status(200).json(updatedItem);
     } catch(e) {
+        console.error(e); // Log the error for debugging
         res.status(400).json(e)
     }
 }

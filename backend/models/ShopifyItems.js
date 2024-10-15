@@ -7,7 +7,8 @@ const shopifySchema = new mongoose.Schema({
     stock: { type: Number, default: 0},
     price:{ type: Number },
     compareAtPrice: { type: Number },
-    weight: { type: [Number, String], default: [null, 'g']},
+    weight: {type: Number, default: 0 },
+    weightType: {type: String, default: 'g'},
     category: { type: String },
     productType: { type: String},
     vendor: {type: String, default: "Heinz History Center"}, 
@@ -20,7 +21,8 @@ const shopifySchema = new mongoose.Schema({
             stock: { type: Number, default: 0},
             price:{ type: Number },
             compareAtPrice: { type: Number },
-            weight: { type: [Number, String], default: [null, 'g']},
+            weight: {type: Number },
+            weightType: {type: String },
 
             options: [
                 {
