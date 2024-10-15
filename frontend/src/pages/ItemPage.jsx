@@ -1,15 +1,13 @@
 import { useLoaderData } from "react-router-dom"
 import { BASE_URL } from "./InventoryPage"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function ItemPage() {
     const {tam, shopify } = useLoaderData()
-    const [shopifyData, setShopifyData] = useState(shopify[0])
+    const [shopifyData, setShopifyData] = useState(shopify[0] || null)
     const tamData = tam[0]
 
     function NotFound({name, sku}) {
-
-    
         return (
             <div className="card">
                 <h2>No item found.</h2>
@@ -27,10 +25,15 @@ export default function ItemPage() {
                 },
                 body: JSON.stringify(tamData),
             })
-            console.log(response)
             if (response.ok) {
                 const newShopifyData = await fetch(`${BASE_URL}/shopify/${sku}`);
-                setShopifyData(newShopifyData)
+                if (newShopifyData.ok) {
+                    const data = await newShopifyData.json()
+                    console.log(data)
+                    setShopifyData(data[0])
+                } else {
+                    console.error("Failed to fetch new data.")
+                }
             }
         } catch(e) {
             console.error(e)
