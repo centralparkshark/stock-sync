@@ -9,7 +9,7 @@ const PORT = 8080;
 
 connectToDb();
 
-app.use(cors())
+app.use(cors({origin: 'https://stock-sync.vercel.app'})) // front end
 app.use(express.json())
 app.use("/shopify", shopifyRouter)
 app.use("/tam", tamRouter)
