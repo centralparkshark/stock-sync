@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "../pages/InventoryPage";
 
-export default function ItemForm({name, editMode, ...itemData}) {
+export default function ItemForm({name, editMode, setShopifyData = () => {}, ...itemData}) {
     const [editing, setEditing] = useState(editMode || false)
     const [data, setData] = useState(itemData)
     const [input, setInput] = useState(itemData)
 
-    
     // for change of input fields
     function handleChange(e) {
         const {name, value} = e.target;
@@ -20,48 +19,48 @@ export default function ItemForm({name, editMode, ...itemData}) {
     // save editing
     async function saveEdits(name) {
         // data to send
-        console.log(input)
         try {
-            const response = await fetch(`${BASE_URL}/${name}/${data.sku}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(input)
-            })
-            if (response.ok) {
-                // set data 
-                const updatedData = await response.json()
-                setData(updatedData)
+            let response;
+            // Check if the item exists
+            const checkResponse = await fetch(`${BASE_URL}/${name}/${data.sku}`);
+            if (checkResponse.ok) {
+                // Item exists, perform a PATCH request
+                response = await fetch(`${BASE_URL}/${name}/${data.sku}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(input),
+                });
+            } else {
+                // Item does not exist, perform a POST request
+                response = await fetch(`${BASE_URL}/${name}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(input),
+                });
             }
-            setEditing(false)
+            console.log(response.status)
+            if (response.ok) {
+                setData(prevData => ({
+                    ...prevData,
+                    ...input, // Merge the updated fields
+                }));
+                if (name == 'shopify') {
+                    setShopifyData(prevData => ({
+                        ...prevData,
+                        ...input,
+                    }));
+                 }
+            }
         } catch (e) {
-            console.error(e)
+            console.error("Error saving edits:", e);
+        } finally {
+            setEditing(false);
         }
     }
-
-    // async function handleCreateItem(dataToUse) {
-    //     try {
-    //         const response = await fetch(`${BASE_URL}/shopify`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 "Content-Type": 'application/json',
-    //             },
-    //             body: JSON.stringify(dataToUse),
-    //         })
-    //         if (response.ok) {
-    //             const newShopifyData = await fetch(`${BASE_URL}/shopify/${tamData.sku}`);
-    //             if (newShopifyData.ok) {
-    //                 const data = await newShopifyData.json()
-    //                 setData(data)
-    //             } else {
-    //                 console.error("Failed to fetch new data.")
-    //             }
-    //         }
-    //     } catch(e) {
-    //         console.error(e)
-    //     }
-    // }
 
     
     return (

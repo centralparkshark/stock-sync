@@ -10,6 +10,7 @@ export default function ItemPage() {
     const tamData = tam[0]
     const [popUpOpen, setPopUpOpen] = useState(false)
 
+    
     function NotFound({name}) {
         return (
             <div className="card">
@@ -21,14 +22,14 @@ export default function ItemPage() {
 
     return (
         <div className="flex relative">
-            {popUpOpen && <AddItemPopUp setPopUpOpen={setPopUpOpen} tamData={tamData} />}
+            {popUpOpen && <AddItemPopUp setPopUpOpen={setPopUpOpen} tamData={tamData} setShopifyData={setShopifyData}/>}
             <div className="half">
                 <h1>TAM</h1>
                 {tamData ? <ItemForm {...tamData} name="tam"/> : <NotFound name ="tam"/>}            
             </div>
             <div className="half">
                 <h1>Shopify</h1>
-                {shopifyData ? <ItemForm {...shopifyData} name="shopify"/> : <NotFound name ="shopify"  sku={tamData.sku}/>}   
+                {shopifyData ? <ItemForm {...shopifyData} name="shopify" setShopifyData={setShopifyData}/> : <NotFound name ="shopify"  sku={tamData.sku}/>}   
             </div>
         </div>
     )
