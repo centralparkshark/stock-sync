@@ -274,6 +274,9 @@ button {
   width: 50%;
 }
 
+.productPicture {
+  max-width: 30%;
+}
 
 @media (max-width: 1000px) {
   #invCard{

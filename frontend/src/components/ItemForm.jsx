@@ -72,7 +72,7 @@ export default function ItemForm({name, editMode, setShopifyData = () => {}, ...
             <form>
             {editing && <label htmlFor="title" className="h2">Title:</label>}
             {editing ? <input name="title" className="h2" type="text" onChange={handleChange} value={input.title}/> : <h2>{data.title}</h2>}
-            {/* <img src={data.media} alt={data.title} /> */}
+            {data.media && <img className="productPicture" src={data.media} alt={data.title} />}
             {name == 'shopify' && editing && <label htmlFor="description">Description:</label>}
             {name == 'shopify' && editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <p>{data.description}</p>}
             <p>SKU: {data.sku}</p>
