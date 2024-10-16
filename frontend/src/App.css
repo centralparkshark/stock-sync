@@ -65,6 +65,12 @@ body {
 
 h2 {
   margin: 0;
+  font-size: 1.6rem;
+}
+
+.h2 {
+  font-size: 1.6rem;
+  width: fit-content;
 }
 
 .syncedOverview>div {

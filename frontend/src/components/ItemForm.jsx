@@ -70,8 +70,8 @@ export default function ItemForm({name, editMode, setShopifyData = () => {}, ...
                     <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> : <button onClick={() => saveEdits(name)}>Save Changes</button>}
             </div>
             <form>
-            {editing && <label htmlFor="title">Title:</label>}
-            {editing ? <input name="title" type="text" onChange={handleChange} value={input.title}/> : <h2>{data.title}</h2>}
+            {editing && <label htmlFor="title" className="h2">Title:</label>}
+            {editing ? <input name="title" className="h2" type="text" onChange={handleChange} value={input.title}/> : <h2>{data.title}</h2>}
             {/* <img src={data.media} alt={data.title} /> */}
             {name == 'shopify' && editing && <label htmlFor="description">Description:</label>}
             {name == 'shopify' && editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <p>{data.description}</p>}
