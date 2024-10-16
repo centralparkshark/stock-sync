@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const shopifySchema = new mongoose.Schema({
     sku: { type: String, required: true}, // default sku if only one item (no variants)
     title: { type: String, required: true},
-    description: { type: String }, 
+    description: {}, 
     media: {type: String}, 
     stock: { type: Number, default: 0},
     price:{ type: Number },

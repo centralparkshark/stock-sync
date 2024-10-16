@@ -74,7 +74,7 @@ export default function ItemForm({name, editMode, setShopifyData = () => {}, ...
             {editing ? <input name="title" className="h2" type="text" onChange={handleChange} value={input.title}/> : <h2>{data.title}</h2>}
             {data.media && <img className="productPicture" src={data.media} alt={data.title} />}
             {name == 'shopify' && editing && <label htmlFor="description">Description:</label>}
-            {name == 'shopify' && editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <p>{data.description}</p>}
+            {name == 'shopify' && editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <>{data.description}</>}
             <p>SKU: {data.sku}</p>
             <table>
                 <tbody>
@@ -84,7 +84,7 @@ export default function ItemForm({name, editMode, setShopifyData = () => {}, ...
                     </tr>
                     <tr>
                         <td>Price:</td>
-                        <td>{editing ? <input name="price" type="number" onChange={handleChange} value={input.price}/> : data.price}</td>
+                        <td>{editing ? <input name="price" type="number" onChange={handleChange} value={input.price}/> : <>${data.price}</>}</td>
                     </tr>
                     <tr>
                         <td>Compare At Price:</td>
