@@ -29,7 +29,7 @@ export default function Item(props) {
             <td>{props.title}</td>
             <td>{props.stock}</td>
             <td>
-                {!synced && <div className="status shopify">Not Synced</div>}
+                {/* {!synced && <div className="status shopify">Not Synced</div>} */}
                 {/* {<div className="status cycle">Uncounted</div>} */}
                 {props.stock < 5 && <div className="status lowStock">Low Stock</div>}
             </td>

@@ -24,7 +24,7 @@ export default function SyncedOverview() {
     return (
         <div className="syncedOverview card">
             <h2 className="titleBar">Dashboard:</h2>
-            <div className="innerCard">Alerts!</div>
+            {/* <div className="innerCard">Alerts!</div> */}
             <div> 
                 <div className="innerCard">Out Of Stock: {outOfStock}</div>
                 <div className="innerCard">Low Stock: {lowStock}</div>
