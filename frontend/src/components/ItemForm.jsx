@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { BASE_URL } from "../pages/InventoryPage";
 
-export default function ItemForm({name, ...itemData}) {
-    const [editing, setEditing] = useState(false)
+export default function ItemForm({name, editMode, ...itemData}) {
+    const [editing, setEditing] = useState(editMode || false)
     const [data, setData] = useState(itemData)
     const [input, setInput] = useState(itemData)
 
@@ -16,24 +17,17 @@ export default function ItemForm({name, ...itemData}) {
     }
 
     
-    // after editing
+    // save editing
     async function saveEdits(name) {
         // data to send
-        const payload = {
-            stock: Number(input.stock),
-            price: Number(input.price),
-            vendor: input.vendor,
-            weight: Number(input.weight),
-            weightType: input.weightType,
-        }
-
+        console.log(input)
         try {
             const response = await fetch(`${BASE_URL}/${name}/${data.sku}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(input)
             })
             if (response.ok) {
                 // set data 
@@ -44,34 +38,46 @@ export default function ItemForm({name, ...itemData}) {
         } catch (e) {
             console.error(e)
         }
-
-
     }
+
+    // async function handleCreateItem(dataToUse) {
+    //     try {
+    //         const response = await fetch(`${BASE_URL}/shopify`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 "Content-Type": 'application/json',
+    //             },
+    //             body: JSON.stringify(dataToUse),
+    //         })
+    //         if (response.ok) {
+    //             const newShopifyData = await fetch(`${BASE_URL}/shopify/${tamData.sku}`);
+    //             if (newShopifyData.ok) {
+    //                 const data = await newShopifyData.json()
+    //                 setData(data)
+    //             } else {
+    //                 console.error("Failed to fetch new data.")
+    //             }
+    //         }
+    //     } catch(e) {
+    //         console.error(e)
+    //     }
+    // }
 
     
     return (
         <div className="card">
             <div className="topRight">
                 {!editing ? 
-                    <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> 
-                    : 
-                    <button onClick={() => saveEdits(name)}>Save Changes</button>}
+                    <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> : <button onClick={() => saveEdits(name)}>Save Changes</button>}
             </div>
-            <h2>{data.title}</h2>
-            <img src={data.media} alt={data.title} />
+            <form>
+            {editing && <label htmlFor="title">Title:</label>}
+            {editing ? <input name="title" type="text" onChange={handleChange} value={input.title}/> : <h2>{data.title}</h2>}
+            {/* <img src={data.media} alt={data.title} /> */}
+            {name == 'shopify' && editing && <label htmlFor="description">Description:</label>}
+            {name == 'shopify' && editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <p>{data.description}</p>}
             <p>SKU: {data.sku}</p>
-            <ItemDetails data={data} editing={editing} input={input} handleChange={handleChange}/>
-            {name == "shopify" && <ShopifyDetails data={data} editing={editing} input={input} handleChange={handleChange}/>}
-            {name == 'tam' && <button>Sync Item</button>}
-        </div>
-
-        
-    )
-}
-
-function ItemDetails({ data, editing, input, handleChange }) {
-    return (
-        <table>
+            <table>
                 <tbody>
                     <tr>
                         <td>Stock:</td>
@@ -81,28 +87,16 @@ function ItemDetails({ data, editing, input, handleChange }) {
                         <td>Price:</td>
                         <td>{editing ? <input name="price" type="number" onChange={handleChange} value={input.price}/> : data.price}</td>
                     </tr>
-                    { data.compareAtPrice ? <tr>
+                    <tr>
                         <td>Compare At Price:</td>
                         <td>{editing ? <input name="compareAtPrice" type="number" onChange={handleChange} value={input.compareAtPrice}/> : data.compareAtPrice}</td>
-                    </tr> : ''}
+                    </tr>
                     <tr>
                         <td>Vendor:</td>
                         <td>{editing ? <input name="vendor" type="text" onChange={handleChange} value={input.vendor}/> : data.vendor}</td>
                     </tr>
-                    <tr>
-                        <td>Last Updated:</td>
-                        <td>{data.lastUpdated}</td>
-                    </tr>
-                </tbody>
-            </table>
-    )
-}
-
-function ShopifyDetails({ data, editing, input, handleChange }) {
-    return (
-        <>
-            <table>
-                <tbody>
+                    {name == 'shopify' && 
+                    <>
                     <tr>
                         <td>Weight:</td>
                         <td>{editing ? 
@@ -112,24 +106,34 @@ function ShopifyDetails({ data, editing, input, handleChange }) {
                         </>
                         : <>{data.weight}{data.weightType}</>}</td>
                     </tr>
-                    {/* <tr>
+                    <tr>
                         <td>Category:</td>
                         <td>{editing ? <input name="category" type="text" onChange={handleChange} value={input.category}/> : data.category}</td>
                     </tr>
                     <tr>
                         <td>Product Type:</td>
-                        <td>{data.productType}</td>
+                        <td>{editing ? <input name="productType" type="text" onChange={handleChange} value={input.productType}/> : data.productType}</td>
                     </tr>
                     <tr>
                         <td>Collections:</td>
-                        <td>{data.collections}</td>
-                    </tr> */}
+                        <td>{editing ? <input name="collections" type="text" onChange={handleChange} value={input.collections}/> : data.collections}</td>
+                    </tr>
                     <tr>
                         <td>Status:</td>
                         <td><div className="status">{data.status}</div></td>
                     </tr>
+                    </>
+                    }
+                    <tr>
+                        <td>Last Updated:</td>
+                        <td>{data.lastUpdated}</td>
+                    </tr>
                 </tbody>
             </table>
-        </>
+            {/* {name == 'tam' && <button>Sync Item</button>} */}
+            </form>
+        </div>
+
+        
     )
 }
