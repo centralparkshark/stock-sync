@@ -3,6 +3,8 @@ import { BASE_URL } from "./InventoryPage"
 import { useState, useEffect } from "react"
 import AddItemPopUp from "../components/AddItemPopUp"
 import ItemForm from "../components/ItemForm"
+import './itemPage.css'
+
 
 export default function ItemPage() {
     const {tam, shopify } = useLoaderData()
@@ -10,27 +12,18 @@ export default function ItemPage() {
     const tamData = tam[0]
     const [popUpOpen, setPopUpOpen] = useState(false)
 
-    
-    function NotFound({name}) {
+    function NotFound() {
         return (
-            <div className="card">
-                <h2>No item found.</h2>
-                {name == "shopify" ? <button onClick={() => setPopUpOpen(true)}>Create item?</button> : ''}
+            <div className="center">
+                <button type="button" onClick={() => setPopUpOpen(true)}>Add to Shopify?</button> 
             </div>
         )
-    }    
+    }  
 
     return (
-        <div className="flex relative">
+        <div className=" flex relative">
             {popUpOpen && <AddItemPopUp setPopUpOpen={setPopUpOpen} tamData={tamData} setShopifyData={setShopifyData}/>}
-            <div className="half">
-                <h1>TAM</h1>
-                {tamData ? <ItemForm {...tamData} name="tam"/> : <NotFound name ="tam"/>}            
-            </div>
-            <div className="half">
-                <h1>Shopify</h1>
-                {shopifyData ? <ItemForm {...shopifyData} name="shopify" setShopifyData={setShopifyData}/> : <NotFound name ="shopify"  sku={tamData.sku}/>}   
-            </div>
+            <ItemForm tamData={tamData} shopifyData={shopifyData} NotFound={NotFound} />
         </div>
     )
 }
