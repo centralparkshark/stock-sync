@@ -12,9 +12,9 @@ export default function ItemBoard({title, inventory, onFilter}) {
         setData(inventory); 
       }, [inventory]);
     
-    function filterData(e) {
+    function filterData(e, shopName) {
         setFilter(e.target.value)
-        onFilter(e.target.value)
+        onFilter(e.target.value, shopName)
     }
 
     return (
@@ -25,7 +25,7 @@ export default function ItemBoard({title, inventory, onFilter}) {
             </div>
             {openFilters && <div className="popUp">
                 <label htmlFor="status">Status:</label>
-                <select name="status" id="" onChange={(e) => filterData(e)} value={filter}>
+                <select name="status" id="" onChange={(e) => filterData(e, title.toLowerCase())} value={filter}>
                     <option value=""></option>    
                     <option value="uncounted">Uncounted</option>    
                     <option value="unsynced">Unsynced</option>    

@@ -34,18 +34,22 @@ export default function InventoryPage() {
       setShopifyData(shopifyJSON)
     }
 
-    async function handleFilter(status) {
+    async function handleFilter(status, shopName) {
       let num;
       if (status == "lowstock") {
         num = 5
+      } else if (status == "outstock") {
+        num = 0
       }
-      const tamRes = await fetch(`${BASE_URL}/tam?status=${num}`);
-      const tamJSON = await tamRes.json()
-      setTamData(tamJSON)
-
-      // const shopifyRes = await fetch(`${BASE_URL}/shopify?search=${searchTerm}`);
-      // const shopifyJSON = await shopifyRes.json()
-      // setShopifyData(shopifyJSON)
+      if (shopName == 'tam') {
+        const tamRes = await fetch(`${BASE_URL}/tam?status=${num}`);
+        const tamJSON = await tamRes.json()
+        setTamData(tamJSON)
+      } else if (shopName == "shopify") {
+        const shopifyRes = await fetch(`${BASE_URL}/shopify?status=${num}`);
+        const shopifyJSON = await shopifyRes.json()
+        setShopifyData(shopifyJSON)
+      }  
     }
 
 
