@@ -3,14 +3,14 @@ import Papa from 'papaparse'
 import { BASE_URL } from "./InventoryPage";
 
 export default function UploadPage() {
-
-    const [system, setSystem] = useState(undefined);
+    const [system, setSystem] = useState(undefined)
     const [file, setFile] = useState(undefined);
     const [error, setError] = useState("")
     const [success, setSuccess] = useState('')
 
     function sendFormData(e) {
         e.preventDefault()
+        setSystem("tam")
         const date = new Date()
         if (file) {
             Papa.parse(file, {
@@ -41,6 +41,7 @@ export default function UploadPage() {
     async function sendToDB(data) {
         for (const item of data) {
             try {
+                console.log(item)
                 const exists = await checkItemExists(item);
                 if (!exists) {
                     const res = await fetch(`${BASE_URL}/${system}`,{
@@ -83,20 +84,17 @@ export default function UploadPage() {
         }
     }
 
-    // this error handling is just simply not correct
 
+    // this error handling is just simply not correct
+    const lastUpdate = "Today"
     return (
         <>
         
         <div className="center">
             <div className="card">
             <form action="">
-                    <div onChange={(e) => setSystem(e.target.value)}>
-                        <label htmlFor="tam">TAM</label>
-                        <input type="radio" name="system" id="tam" value="tam" required />
-                        <label htmlFor="shopify">Shopify</label>
-                        <input type="radio" name="system" id="shopify" value="shopify" required />
-                    </div>
+                    <h2>Upload TAM Data:</h2>
+                    <p>Last update: {lastUpdate}</p>
                     <input type="file" name="csv" id="" accept="text/csv" onChange={(e) => setFile(e.target.files[0])} required/>
                     <button onClick={(e) => sendFormData(e)}>Upload</button>
             </form>

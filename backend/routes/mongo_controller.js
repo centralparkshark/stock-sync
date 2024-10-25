@@ -113,4 +113,3 @@ const handlePostManyItems = async (model, req, res) => {
 };
 
 export const tamRouter = createRouter(TamItems);
-export const shopifyRouter = createRouter(ShopifyItems);

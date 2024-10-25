@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 const tamSchema = new mongoose.Schema({
     sku: { type: String, required: true}, // all variants have own skus
     title: { type: String, required: true},
-    stock: { type: Number, default: 0},
+    stock: {
+        tam: {type: Number, required: true},
+        calc: { type: Number }
+    },
     // floorStock: { type: Number, default: 0}, // used for cycle counting
     // backStock: { type: Number, default: 0}, // used for cycle counting
     price:{ type: Number },

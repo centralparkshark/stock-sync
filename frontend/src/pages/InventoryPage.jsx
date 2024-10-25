@@ -11,12 +11,15 @@ export default function InventoryPage() {
 
     useEffect(() => {
       async function initialFetch() {
+        // pulls from mongodb
         const tamResponse = await fetch(`${BASE_URL}/tam`)
         const tamJSON = await tamResponse.json()
         setTamData(tamJSON)
   
+        // pulls from shopify
         const shopifyResponse = await fetch(`${BASE_URL}/shopify`)
         const shopifyJSON = await shopifyResponse.json()
+        console.log(shopifyJSON)
         setShopifyData(shopifyJSON)
       }
       initialFetch()
