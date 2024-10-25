@@ -42,7 +42,7 @@ export default function ItemBoard({title, inventory, onFilter}) {
                 </tr>
             </thead>
             <tbody>
-                {data ? data.map(item => (<Item key={item._id} {...item}></Item>)) : "No results found."}
+                {data ? data.map(item => (<Item key={item._id} {...item} ></Item>)) : "No results found."}
             </tbody>
         </table>
         </div>

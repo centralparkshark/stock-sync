@@ -11,7 +11,7 @@ export default function ItemPage() {
     const [shopifyData, setShopifyData] = useState(shopify[0] || null)
     const tamData = tam[0]
     const [popUpOpen, setPopUpOpen] = useState(false)
-
+    
     function NotFound() {
         return (
             <div className="center">
