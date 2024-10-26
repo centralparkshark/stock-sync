@@ -40,6 +40,20 @@ async function handleGetItem(model, req, res) {
                     inventoryQuantity
                     price
                     compareAtPrice
+                    image {
+                        url
+                        altText
+                    }
+                    product {
+                        description
+                        descriptionHtml
+                        productType
+                        status
+                        tags
+                        title
+                        vendor
+                    }
+                    sku
                 }
             }
         }
