@@ -38,5 +38,7 @@ export default function SyncedOverview() {
     )
 }
 
-// each card should link to tasks page with pre-filtered data 
-// total inventory should link to inventory
+
+
+// TODO: each card should link to tasks page with pre-filtered data, total inventory should link to inventory
+// TODO: Make so it filters ALL data rather than the paginated data

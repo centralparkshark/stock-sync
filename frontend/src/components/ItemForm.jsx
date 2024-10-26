@@ -6,6 +6,8 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
     const [editedData, setEditedData] = useState(shopifyData)
     const [input, setInput] = useState(shopifyData)
 
+
+    console.log(shopifyData)
     // assume tamData is the og state, uneditable
     // assume shopifyData as new state, can be changed
 

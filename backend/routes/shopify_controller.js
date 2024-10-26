@@ -3,6 +3,7 @@ import { Router } from "express";
 import ShopifyItems from "../models/ShopifyItems.js";
 import Shopify from "shopify-api-node";
 import dotenv from "dotenv";
+import axios from 'axios'
 
 dotenv.config()
 
@@ -28,19 +29,39 @@ const createRouter = (model) => {
 
 
 
-// // READ (/:sku)
-// async function handleGetItem(model, req, res) {
-//     const {sku} = req.params;
-//     try {
-//         const results = await model.find({ sku })
-//         if (!results.length) {
-//             return res.status(404).json({message: 'SKU not found.'})
-//         }
-//         res.status(200).json(results)
-//     } catch(e) {
-//         res.status(400).json(e)
-//     }
-// }
+// READ (/:sku)
+async function handleGetItem(model, req, res) {
+    const {sku} = req.params;
+    const query = ` query {
+        productVariants(first: 1, query: "sku:${sku}") {
+            edges {
+                node {
+                    id
+                    inventoryQuantity
+                    price
+                    compareAtPrice
+                }
+            }
+        }
+    }`
+    try {
+        const response = await axios.post(
+            `https://${process.env.SHOP}.myshopify.com/admin/api/2024-10/graphql.json`,
+            {query},
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Shopify-Access-Token': process.env.ADMIN_ACCESS_TOKEN
+                }
+            }
+        )
+        const product = response.data.data.productVariants.edges[0].node
+        console.log(product)
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
 
 
 // // CREATE (ONE, :/sku)

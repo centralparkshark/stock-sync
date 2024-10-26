@@ -7,11 +7,13 @@ import './itemPage.css'
 
 
 export default function ItemPage() {
+    console.log("TEST")
     const {tam, shopify } = useLoaderData()
-    const [shopifyData, setShopifyData] = useState(shopify[0] || null)
+    const [shopifyData, setShopifyData] = useState(shopify || null)
     const tamData = tam[0]
     const [popUpOpen, setPopUpOpen] = useState(false)
-    
+    console.log(tam)
+    console.log(shopify)
     function NotFound() {
         return (
             <div className="center">
@@ -35,5 +37,6 @@ export const itemLoader = async (params) => {
 
     const tam = await tamRes.json()
     const shopify = await shopifyRes.json()
+
     return {tam, shopify}
 }

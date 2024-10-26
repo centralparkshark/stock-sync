@@ -6,6 +6,9 @@ export default function Item(props) {
     if (props.sku) {
         // replace leading zeros to match skus
         sku = props.sku.replace(/^0+/, '') 
+    } else {
+        // TODO: handle shopify items since sku isnt top level
+        sku = props.variants[0].sku
     }
 
     const navigate = useNavigate();
@@ -14,23 +17,26 @@ export default function Item(props) {
 
     }
 
-    let qty = 0;
-    if (props.stock)  qty = props.stock;
-    else {
-        for (const item in props.variants) {
-            qty+= props.variants[item].inventory_quantity
-        }
-        // if (props.variants.length > 1) qty = `${qty} from ${props.variants.length} variants`
-    }
+    
+    // let qty = [];
+    // if (props.stock) qty[0] = props.stock;
+    // // gives total quantity for variants on shopify
+    // else {
+    //     for (const item in props.variants) {
+    //         qty[0]+= props.variants[item].inventory_quantity
+    //     }
+    //     if (props.variants.length > 1) qty[1] = `${qty} from ${props.variants.length} variants`
+    //     else qty[1] = qty
+    // }
 
     return (
         <tr className="item" onClick={() => handleRowClick(sku)}>
             <td>{props.title}</td>
-            <td>{qty}</td>
+            {/* <td>{qty[1]}</td> */}
             <td>
                 {/* {!props.synced && <div className="status shopify">Not Synced</div>} */}
                 {/* {<div className="status cycle">Uncounted</div>} */}
-                {qty < 5 && <div className="status lowStock">Low Stock</div>}
+                {/* {qty < 5 && <div className="status lowStock">Low Stock</div>} */}
             </td>
         </tr>
     )
