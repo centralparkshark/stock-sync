@@ -1,40 +1,37 @@
 import mongoose from "mongoose";
 
 const shopifySchema = new mongoose.Schema({
-    sku: { type: String, required: true}, // default sku if only one item (no variants)
     title: { type: String, required: true},
-    description: {}, 
-    media: {type: String}, 
-    stock: { type: Number, default: 0},
-    price:{ type: Number },
-    compareAtPrice: { type: Number },
-    weight: {type: Number, default: 0 },
-    weightType: {type: String, default: 'g'},
-    category: { type: String },
-    productType: { type: String},
+    body_html: {},
     vendor: {type: String, default: "Heinz History Center"}, 
-    collections: {type: [String]},
+    product_type: { type: String},
+    tags: {},
     status: {type: String, enum: ["draft", "active", "archived"], default: "draft", required: true},
-    lastUpdated: {type: String, required: true}, // date, change on new data upload but not on edit
     variants: [
         {
-            sku: { type: String }, // variant sku
-            stock: { type: Number, default: 0},
+            title: { type: String},
             price:{ type: Number },
-            media: {type: String}, 
-            compareAtPrice: { type: Number },
+            compare_at_price:{ type: Number },
+            taxable: {type: Boolean, default: true},
+            grams: {type: Number },
+            inventory_management: {type: String, required: true, default: "shopify"},
+            sku: { type: String }, // variant sku
             weight: {type: Number },
-            weightType: {type: String },
-
-            options: [
-                {
-                    name: { type: String }, // ex. size, color
-                    value: { type: String }, // ex. red, Large
-                }
-            ]
+            weight_unit: {type: String },
+            inventory_quantity: { type: Number, default: 0},
+        },
+    ],
+    options: [
+        {
+            name: {type: String},
+            values: [],
         }
-    ]
+    ],
+    images: []
 })
+    
+    
+
 
 // required is sku, title, status, and last updated
 // stock, vendor, status have default values

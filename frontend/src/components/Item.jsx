@@ -2,18 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 
 export default function Item(props) {    
-    let isSynced = false;
-
-    let sku = props.sku.replace(/^0+/, '') // replace leading zeros to match skus
-    
-    // // check if shopify data already has sku
-    // let match = shopifyData.find(item => item.sku === sku)
-    // if (match) {
-    //     // handling of some kind to make sure it actually matches
-    //     // ideally check price and quantity
-    //     // console.log(match)
-    //     isSynced = true;
-    // } 
+    let sku;
+    if (props.sku) {
+        // replace leading zeros to match skus
+        sku = props.sku.replace(/^0+/, '') 
+    } else {
+        // TODO: handle shopify items since sku isnt top level
+        sku = props.variants[0].sku
+    }
 
     const navigate = useNavigate();
     function handleRowClick(sku) {
@@ -21,18 +17,32 @@ export default function Item(props) {
 
     }
 
-    const [synced, setSynced] = useState(isSynced)
-
     
+    // let qty = [];
+    // if (props.stock) qty[0] = props.stock;
+    // // gives total quantity for variants on shopify
+    // else {
+    //     for (const item in props.variants) {
+    //         qty[0]+= props.variants[item].inventory_quantity
+    //     }
+    //     if (props.variants.length > 1) qty[1] = `${qty} from ${props.variants.length} variants`
+    //     else qty[1] = qty
+    // }
+
     return (
         <tr className="item" onClick={() => handleRowClick(sku)}>
             <td>{props.title}</td>
-            <td>{props.stock}</td>
+            {/* <td>{qty[1]}</td> */}
             <td>
-                {/* {!synced && <div className="status shopify">Not Synced</div>} */}
+                {/* {!props.synced && <div className="status shopify">Not Synced</div>} */}
                 {/* {<div className="status cycle">Uncounted</div>} */}
-                {props.stock < 5 && <div className="status lowStock">Low Stock</div>}
+                {/* {qty < 5 && <div className="status lowStock">Low Stock</div>} */}
             </td>
         </tr>
     )
 }
+
+// TODO: how to render sku? or id for navigation for shopify items
+// TODO: synced status button
+// TODO: cycle counting status button
+// TODO: figure out variant counting tagger

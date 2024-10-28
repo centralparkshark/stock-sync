@@ -10,10 +10,3 @@ export default function SearchBar({onSearch}) {
         </form>
     )
 }
-
-
-// <div>
-//                     <input type='text' placeholder='Search' />
-//                     <button className=" fa fa-filter" onClick={() => setOpenFilters(!openFilters)}></button>
-//                 </div>
-

@@ -3,12 +3,15 @@ import mongoose from "mongoose";
 const tamSchema = new mongoose.Schema({
     sku: { type: String, required: true}, // all variants have own skus
     title: { type: String, required: true},
-    stock: { type: Number, default: 0},
-    floorStock: { type: Number, default: 0}, // used for cycle counting
-    backStock: { type: Number, default: 0}, // used for cycle counting
+    stock: {
+        tam: {type: Number, required: true},
+        calc: { type: Number }
+    },
+    // floorStock: { type: Number, default: 0}, // used for cycle counting
+    // backStock: { type: Number, default: 0}, // used for cycle counting
     price:{ type: Number },
     vendor: {type: String }, 
-    lastCounted: {type: String }, // when cycled
+    // lastCounted: {type: String }, // when cycled
     lastUpdated: {type: String, required: true}, // date, change on new data upload but not on edit
     shopifyStatus: {type: Boolean, default: false}
 })
