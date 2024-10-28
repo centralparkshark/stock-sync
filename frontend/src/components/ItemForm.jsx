@@ -3,11 +3,30 @@ import { BASE_URL } from "../pages/InventoryPage";
 
 export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
     const [editing, setEditing] = useState(editMode || false)
-    const [editedData, setEditedData] = useState(shopifyData)
     const [input, setInput] = useState(shopifyData)
 
 
     console.log(shopifyData)
+    // shopifyData =  {
+    //     id
+    //     inventoryQuantity
+    //     price
+    //     compareAtPrice
+    //     image {
+    //         url
+    //         altText
+    //     }
+    //     product {
+    //         description
+    //         descriptionHtml
+    //         productType
+    //         status
+    //         tags
+    //         title
+    //         vendor
+    //     }
+    //     sku
+    // }
     // assume tamData is the og state, uneditable
     // assume shopifyData as new state, can be changed
 
@@ -29,16 +48,16 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
     async function saveEdits() {
         // data to send
         try {
-            const url = editedData ? `${BASE_URL}/shopify/${editedData.sku}` : `${BASE_URL}/shopify`
+            const url = shopifyData ? `${BASE_URL}/shopify/${shopifyData.sku}` : `${BASE_URL}/shopify`
             const options =  {
-                method: editedData ? 'PATCH' : 'POST',
+                method: shopifyData ? 'PATCH' : 'POST',
                 headers: {'Content-Type': 'application/json' },
                 body: JSON.stringify(input),
             };
             const response = await fetch(url, options)
 
             if (response.ok) {
-                setEditedData(prevData => ({
+                setshopifyData(prevData => ({
                     ...prevData,
                     ...input, // Merge the updated fields
                 }));
@@ -57,7 +76,7 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
 
     function renderTableRow(label, key, type = "text") {
         const tamValue = tamData[key]
-        const shopifyValue = editedData ? editedData[key] : null;
+        const shopifyValue = shopifyData ? shopifyData[key] : null;
         const showEditingInput = editing ? ( 
             <input
                 name={key}
@@ -86,13 +105,13 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
                     <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> : <button onClick={() => saveEdits()}>Save Changes</button>}
             </div>
             <form>
-                {!editedData && NotFound()}
+                {!shopifyData && NotFound()}
                 {editing && <label htmlFor="title" className="h2">Title:</label>}
-                {editing ? <input name="title" className="h2" type="text" onChange={handleChange} value={input.title}/> : <h2>{editedData ? editedData.title : tamData.title}</h2>}
+                {editing ? <input name="title" className="h2" type="text" onChange={handleChange} value={input.title}/> : <h2>{shopifyData ? shopifyData.title : tamData.title}</h2>}
                 <p>SKU: {tamData.sku}</p>
-                {editedData ? <img className="productPicture" src={editedData.media} alt={editedData.title} /> : missing()}
-                {editedData ? editing && <label htmlFor="description">Description:</label> : missing()}
-                {editedData ? editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <p className="description">{editedData.description}</p> : missing()}
+                {shopifyData.image ? <img className="productPicture" src={shopifyData.image.url} alt={shopifyData.image.altText} /> : missing()}
+                {shopifyData ? editing && <label htmlFor="description">Description:</label> : missing()}
+                {shopifyData ? editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <p className="description">{shopifyData.product.description}</p> : missing()}
                 <table>
                     <thead>
                         <tr>
@@ -105,13 +124,17 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
                         <tr>
                             <td>Stock:</td>
                             <td>{tamData.stock}</td>
-                            <td>{editedData ? editedData.stock : missing()}</td>
+                            <td>{shopifyData ? shopifyData.inventoryQuantity : missing()}</td>
                         </tr>
                         {renderTableRow("Price", "price", "number")}
                         {renderTableRow("Compare At Price", "compareAtPrice", "number")}
-                        {renderTableRow("Vendor", "vendor", "text")}
+                        <tr>
+                            <td>Vendor:</td>
+                            <td>{tamData.vendor}</td>
+                            <td>{shopifyData ? shopifyData.product.vendor : missing()}</td>
+                        </tr>
                         
-                        {editedData ?
+                        {/* {shopifyData ?
                         <>
                         <tr>
                             <td>Weight:</td>
@@ -121,7 +144,7 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
                                 <input name="weight" type="number" onChange={handleChange} value={input.weight}/>
                                 <input name="weightType" type="text" onChange={handleChange} value={input.weightType}/>
                             </>
-                            : <>{editedData.weight}{editedData.weightType}</>}</td>
+                            : <>{shopifyData.weight}{shopifyData.weightType}</>}</td>
                         </tr>
                         {renderTableRow("Category", "category", "text")}
                         {renderTableRow("Product Type", "productType", "text")}
@@ -130,16 +153,16 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
                 
                     <tr>
                         <td>Status:</td>
-                        <td><div className="status">{editedData.status ? editedData.status : "Not on Shopify."}</div></td>
+                        <td><div className="status">{shopifyData.status ? shopifyData.status : "Not on Shopify."}</div></td>
                     </tr>
                         
                         </> : missing()
 
-                        }
+                        } */}
                     <tr>
                         <td>Last Updated:</td>
                         <td>{tamData.lastUpdated}</td>
-                        <td>{editedData? editedData.lastUpdated: missing()}</td>
+                        <td>{shopifyData? shopifyData.lastUpdated: missing()}</td>
                     </tr>
                     </tbody>
                 </table>
