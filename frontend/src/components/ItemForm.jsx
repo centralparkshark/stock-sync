@@ -3,7 +3,7 @@ import { BASE_URL } from "../pages/InventoryPage";
 
 export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
     const [editing, setEditing] = useState(editMode || false)
-    const [input, setInput] = useState(shopifyData || {})
+    const [input, setInput] = useState(shopifyData)
     const [errors, setErrors] = useState({})
 
     // shopifyData =  {
@@ -30,6 +30,13 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
     // assume tamData is the og state, uneditable
     // assume shopifyData as new state, can be changed
 
+    useEffect(() => {
+        if (shopifyData) {
+            setInput(shopifyData);
+        }
+    }, [shopifyData]); // This ensures input updates when shopifyData changes
+
+
     function checkForMismatch(data1, data2) {
         return data1 !== data2
     }
@@ -41,6 +48,8 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
             ...prev,
             [name]: value
         }))
+
+        console.log(input)
 
         if (tamData[name] !== undefined) {
             setErrors((prevErrors) => ({
@@ -59,23 +68,52 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
     async function saveEdits() {
         // data to send
         try {
-            const url = shopifyData ? `${BASE_URL}/shopify/${shopifyData.sku}` : `${BASE_URL}/shopify`
+            const url = `${BASE_URL}/shopify/${tamData.sku}`
             const options =  {
-                method: shopifyData ? 'PATCH' : 'POST',
+                method: Object.keys(shopifyData).length ? 'PATCH' : 'POST',
                 headers: {'Content-Type': 'application/json' },
-                body: JSON.stringify(input),
+                body: Object.keys(shopifyData).length ? JSON.stringify(input) : JSON.stringify(tamData),
             };
             const response = await fetch(url, options)
-
+            const data = await response.json()
             if (response.ok) {
                 setInput(prevData => ({
                     ...prevData,
                     ...input, // Merge the updated fields
                 }));
                 setEditing(false);
+                console.log("we made it here.")
             }
+            
+            console.log(data)
         } catch (e) {
             console.error("Error saving edits:", e);
+        } 
+    }
+
+    async function createItem() {
+        // data to send
+        console.log(tamData)
+        try {
+            const url = `${BASE_URL}/shopify`
+            const options =  {
+                method:  'POST',
+                headers: {'Content-Type': 'application/json' },
+                body: JSON.stringify(tamData),
+            };
+            const response = await fetch(url, options)
+            console.log(response.status)
+            const data = await response.json()
+            if (!response.ok) {
+                const errorMessage = await response.text(); // Get the response body for error handling
+                console.error("Error response:", errorMessage);
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            setInput(data);
+            console.log("we made it here.")
+            console.log(data)
+        } catch (e) {
+            console.error("Error creating item:", e);
         } 
     }
 
@@ -108,23 +146,26 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
     }
 
     
-
-    
     return (
         <div className="card">
             <div className="topRight">
                 {!editing ? 
-                    <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> :
-                    <button onClick={() => saveEdits()}>Save Changes</button>}
+                    (!editing && !Object.keys(shopifyData).length ?
+                    <button onClick={createItem}>Add to Shopify</button> :
+                    <div className=" fa fa-edit fa-2x" onClick={() => setEditing(true)}></div> ) :
+                    <>
+                        <button onClick={() => setEditing(false)}>Cancel</button>
+                        <button onClick={() => saveEdits()}>Save Changes</button>
+                    </>}
             </div>
             <form>
                 {!shopifyData && NotFound()}
                 {editing && <label htmlFor="title" className="h2">Title:</label>}
-                {editing ? <input name="title" className="h2" type="text" onChange={handleChange} value={input.title || ""}/> : <h2>{shopifyData ? shopifyData.title : tamData.title}</h2>}
+                {editing ? <input name="title" className="h2" type="text" onChange={handleChange} value={tamData.title || ""}/> : <h2>{shopifyData.title ? shopifyData.title : tamData.title}</h2>}
                 <p>SKU: {tamData.sku}</p>
                 {shopifyData.image ? <img className="productPicture" src={shopifyData.image.url} alt={shopifyData.image.altText} /> : missing()}
                 {shopifyData ? editing && <label htmlFor="description">Description:</label> : missing()}
-                {shopifyData ? editing ? <textarea name="description" type="text" onChange={handleChange} value={input.description}/> : <p className="description">{shopifyData.product.description}</p> : missing()}
+                <div>{shopifyData && shopifyData.product ? shopifyData.product.vendor : missing()}</div>
                 <table>
                     <thead>
                         <tr>
@@ -138,47 +179,43 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
                             <td>Stock:</td>
                             <td>{tamData.stock}</td>
                             <td>
-                                {shopifyData ? shopifyData.inventoryQuantity : missing()}
+                                {shopifyData.inventoryQuantity ? shopifyData.inventoryQuantity : missing()}
                             </td>
                         </tr>
-                        {renderTableRow("Price", "price", "number")}
-                        {renderTableRow("Compare At Price", "compareAtPrice", "number")}
+                            {renderTableRow("Price", "price", "number")}
+                            {renderTableRow("Compare At Price", "compareAtPrice", "number")}
                         <tr>
                             <td>Vendor:</td>
                             <td>{tamData.vendor}</td>
-                            <td>{shopifyData ? shopifyData.product.vendor : missing()}</td>
+                            <td>{shopifyData && shopifyData.product ? shopifyData.product.vendor : missing()}</td>                        
                         </tr>
                         
-                        {shopifyData &&
-                        <>
+                        {shopifyData && <>
+                            <tr>
+                                <td>Weight:</td>
+                                <td></td>
+                                <td>{editing ? 
+                                    <>
+                                        <input name="weight" type="number" onChange={handleChange} value={input.weight}/>
+                                        <input name="weightType" type="text" onChange={handleChange} value={input.weightType}/>
+                                    </>
+                                    : <>{shopifyData.weight || missing()}{shopifyData.weightType}</>}
+                                </td>
+                            </tr>
+                            {renderTableRow("Category", "category", "text")}
+                            {renderTableRow("Product Type", "productType", "text")}
+                            {renderTableRow("Collections", "collections", "text")}
+                            <tr>
+                                <td>Status:</td>
+                                <td><div className="status">{shopifyData.status || "Not on Shopify."}</div></td>
+                            </tr>
+                                
+                        </>}
                         <tr>
-                            <td>Weight:</td>
-                            <td></td>
-                            <td>{editing ? 
-                            <>
-                                <input name="weight" type="number" onChange={handleChange} value={input.weight}/>
-                                <input name="weightType" type="text" onChange={handleChange} value={input.weightType}/>
-                            </>
-                            : <>{shopifyData.weight || missing()}{shopifyData.weightType}</>}</td>
+                            <td>Last Updated:</td>
+                            <td>{tamData.lastUpdated}</td>
+                            <td>{shopifyData? shopifyData.lastUpdated: missing()}</td>
                         </tr>
-                        {renderTableRow("Category", "category", "text")}
-                        {renderTableRow("Product Type", "productType", "text")}
-                        {renderTableRow("Collections", "collections", "text")}
-                    
-                
-                    <tr>
-                        <td>Status:</td>
-                        <td><div className="status">{shopifyData.status || "Not on Shopify."}</div></td>
-                    </tr>
-                        
-                        </> 
-
-                        }
-                    <tr>
-                        <td>Last Updated:</td>
-                        <td>{tamData.lastUpdated}</td>
-                        <td>{shopifyData? shopifyData.lastUpdated: missing()}</td>
-                    </tr>
                     </tbody>
                 </table>
             </form>
