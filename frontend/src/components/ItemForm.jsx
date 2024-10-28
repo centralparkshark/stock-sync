@@ -102,11 +102,8 @@ export default function ItemForm({editMode, tamData, shopifyData, NotFound}) {
                 body: JSON.stringify(tamData),
             };
             const response = await fetch(url, options)
-            console.log(response.status)
             const data = await response.json()
             if (!response.ok) {
-                const errorMessage = await response.text(); // Get the response body for error handling
-                console.error("Error response:", errorMessage);
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             setInput(data);
