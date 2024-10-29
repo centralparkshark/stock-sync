@@ -103,11 +103,11 @@ export default async function createNewItem(req, res) {
             }
         );
         
-        console.log(createTrackedResponse.data)
-        // const { product, userErrors } = createTrackedResponse.data.data.productSet;
-        // if (userErrors.length > 0) {
-        //     return res.status(400).json({ errors: userErrors });
-        // }
+        // console.log(createTrackedResponse.data)
+        const trackedUserErrors = createTrackedResponse.data.data.inventoryItemUpdate.userErrors;
+        if (trackedUserErrors.length > 0) {
+            return res.status(400).json({ errors: trackedUserErrors });
+        }
 
         res.status(201).json(product);
     } catch (e) {
@@ -115,3 +115,8 @@ export default async function createNewItem(req, res) {
         res.status(500).json();
     }
 }
+
+// TODO: Error handling for created item
+// TODO: Have it update page on add with some sort of confirmation message
+// TODO: Ability to edit the data before sending (bring pop up back)
+// TAM Case Number: 136311
